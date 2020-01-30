@@ -8,6 +8,19 @@
     <title>Casrollton</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+
+    <!-- Javascript -->
+    @yield('js_head')
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -32,18 +45,35 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="nom" id="nom" placeholder="Votre nom" value="{{ old('nom') }}">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
-<div class="container mt-2">
+<div class="container mt-2" id="body">
     @yield('body')
 </div>
 
+    @yield('js')
+<script>
+    $( "a" ).click(function( event ) {
+        let a = $ ( this );
+        let link = a.attr('href');
+        if (! link.includes('http')) {
+            event.preventDefault();
+            $.ajax({
+                url : link, // La ressource ciblée
+                type : 'GET',
+                success : function (data) {
+                    window.history.pushState("object or string", "Title", link); // TODO : replace params 1 & 2
+                    $('#body').html(data.body);
+                    $(document.body).append(data.js);
 
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/popper.js/dist/popper.min.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+                }
+            });
+        }
+
+    });
+</script>
 </body>
 </html>

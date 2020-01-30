@@ -12,3 +12,9 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::get('/recette', 'RecetteController@edit');
+
+Route::post('recette', 'RecetteController@creer');
+
+Route::put('recette', 'RecetteController@modifier');
