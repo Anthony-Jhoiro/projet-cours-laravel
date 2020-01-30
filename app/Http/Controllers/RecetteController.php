@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\Validator;
 
 class RecetteController extends Controller
 {
+
+    public function create()
+    {
+        //
+    }
+    public function store(Request $request)
+    {
+        //
+    }
+
     public function edit (Request $request) {
         // TODO : Pouvoir changer le type du formulaire (POST / PUT)
         $parametres = [
