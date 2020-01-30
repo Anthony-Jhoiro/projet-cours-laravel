@@ -20,7 +20,7 @@ class CreateAssetsTable extends Migration
             $table->foreign ('recette')
                 -> references ('id')
                 -> on ('recette')
-                -> onUpdate ('cacade')
+                -> onUpdate ('cascade')
                 -> onDelete ('cascade');
             $table->timestamps();
         });
