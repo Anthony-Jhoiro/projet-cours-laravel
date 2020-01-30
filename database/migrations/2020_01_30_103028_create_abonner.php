@@ -15,9 +15,9 @@ class CreateAbonner extends Migration
     {
         Schema::create('abonner', function (Blueprint $table) {
             $table->bigInteger('abonne');
-            $table->foreign('abonne')->references('id')->on('users');
+            $table->foreign('abonne')->references('id')->on('users')->onUpdate('cascade');
             $table->bigInteger('suivi');
-            $table->foreign('suivi')->references('id')->on('users');
+            $table->foreign('suivi')->references('id')->on('users')->onUpdate('cascade');
         });
     }
 
