@@ -17,3 +17,5 @@ Route::get('/recette', 'RecetteController@edit');
 
 Route::get('recette', 'RecetteController@create')->name('recette.create');
 Route::post('recette', 'RecetteController@store')->name('recette.store');
+
+Auth::routes();
