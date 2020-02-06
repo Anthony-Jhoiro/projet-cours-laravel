@@ -53,5 +53,6 @@
 <div class="container mt-2" id="body">
     @yield('body')
 </div>
+@yield('js')
 </body>
 </html>
