@@ -14,10 +14,18 @@ class CreateAbonner extends Migration
     public function up()
     {
         Schema::create('abonner', function (Blueprint $table) {
-            $table->bigInteger('abonne');
-            $table->foreign('abonne')->references('id')->on('users')->onUpdate('cascade');
-            $table->bigInteger('suivi');
-            $table->foreign('suivi')->references('id')->on('users')->onUpdate('cascade');
+            $table->bigInteger('abonne')->unsigned();
+            $table->foreign('abonne')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+            $table->bigInteger('suivi')->unsigned();
+            $table->foreign('suivi')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
         });
     }
 

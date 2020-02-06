@@ -19,7 +19,7 @@ class CreateAssetsTable extends Migration
             $table->unsignedBigInteger('recette');
             $table->foreign ('recette')
                 -> references ('id')
-                -> on ('recette')
+                -> on ('recettes')
                 -> onUpdate ('cascade')
                 -> onDelete ('cascade');
             $table->timestamps();

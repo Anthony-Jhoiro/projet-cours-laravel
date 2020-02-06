@@ -14,12 +14,22 @@ class CreateCatsPrefs extends Migration
     public function up()
     {
         Schema::create('cats_prefs', function (Blueprint $table) {
-            $table->bigInteger('users_id');
-            $table->foreign('users_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->bigInteger('categories_id');
-            $table->foreign('categories_id')->references('id')->on('categories')->onUpdate('cascade');
+            $table->bigInteger('user_id')->unsigned ();
+            $table->bigInteger('categorie_id')->unsigned ();
             $table->dateTime('derniere_visite');
             $table->integer('nb_visite');
+            $table->foreign('categorie_id')
+                ->references('id')
+                ->on('categories')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
         });
     }
 
