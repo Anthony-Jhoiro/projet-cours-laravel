@@ -16,6 +16,7 @@ class CreateCatsPrefs extends Migration
         Schema::create('cats_prefs', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned ();
             $table->bigInteger('categorie_id')->unsigned ();
+
             $table->dateTime('derniere_visite');
             $table->integer('nb_visite');
             $table->foreign('categorie_id')

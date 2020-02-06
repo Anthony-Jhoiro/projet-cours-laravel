@@ -26,6 +26,7 @@ class CreateAbonner extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+
         });
     }
 
