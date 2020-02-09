@@ -24,7 +24,7 @@ class RecetteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => 'bail|required|between:5,255|alpha',
+            'titre' => 'bail|required|between:5,255|alpha',
             'text' => 'bail|required',
         ];
     }

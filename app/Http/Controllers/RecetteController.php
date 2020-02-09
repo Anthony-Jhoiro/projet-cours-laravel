@@ -6,6 +6,7 @@ use App\Http\Requests\RecetteRequest;
 use App\Recette;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class RecetteController extends Controller
@@ -13,7 +14,12 @@ class RecetteController extends Controller
 
     public function create()
     {
-        return view ('recetteEdit', ['typeFormulaire' => 'POST']);
+        $parametres = [
+            'typeFormulaire' => 'POST',
+            'recette' => new Recette(),
+            'id' => -1
+        ];
+        return view ('recetteEdit', $parametres);
     }
 
     public function store(RecetteRequest $request)
@@ -26,15 +32,29 @@ class RecetteController extends Controller
         return view ('/');
     }
 
-    public function edit (Request $request) {
-        // TODO : Pouvoir changer le type du formulaire (POST / PUT)
+    public function update(Request $request, $n)
+    {
+
+        Log::debug ("Update !");
+        $recette = Recette::find($n);
+        $recette->titre = $request->input ('titre');
+        $recette->titre = $request->input ('text');
+        $recette->save();
+        return view ('home');
+    }
+
+    public function edit (Request $request, $n) {
+        $recette = Recette::find($n);
+
+        if (!isset($recette)) {
+            abort(404);
+        }
         $parametres = [
-            'typeFormulaire' => 'POST'
+            'typeFormulaire' => 'PATCH',
+            'recette' => $recette,
+            'id' => $n
         ];
         return view ('recetteEdit', $parametres);
-
-
-
     }
 
     public function creer (Request $request) {

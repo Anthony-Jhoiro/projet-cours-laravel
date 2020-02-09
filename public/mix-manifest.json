@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/ressources/bootstrap.min.js": "/js/ressources/bootstrap.min.js",
+    "/js/ressources/jquery.min.js": "/js/ressources/jquery.min.js",
+    "/js/ressources/popperjs.min.js": "/js/ressources/popperjs.min.js",
     "/js/simplemde.min.js": "/js/simplemde.min.js",
-    "/css/all.css": "/css/all.css"
+    "/css/simplemde.min.css": "/css/simplemde.min.css"
 }
