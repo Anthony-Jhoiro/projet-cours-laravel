@@ -29,4 +29,22 @@ class RecetteRequest extends FormRequest
             'message' => 'bail|required|max:250'
         ];
     }
+
+
+    public function getPersonalRecettes(){
+        $recettes = App\Recette::all();
+    }
+
+    public function tempGetRecettes(){
+        return [
+            [   
+                "id" => "1",
+                "text" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum eos vel ipsum, minima deserunt neque nobis tempora numquam voluptate consequatur consequuntur facilis dicta rerum alias facere. Recusandae illum quisquam rerum",
+                "created_at" => new Date("2020-02-06", ),
+                "updated_at" => "",
+                "auteur" => ""
+            ],
+
+        ];
+    }
 }
