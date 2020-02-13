@@ -13,11 +13,13 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/recette', 'RecetteController@edit');
+//Route::get('/recette', 'RecetteController@edit');
 
 Route::get('recette', 'RecetteController@create')->name('recette.create');
 Route::post('recette', 'RecetteController@store')->name('recette.store');
 
 Route::post('/login', 'LoginController@loger');
+
+Route::get('/wow', 'RecetteController@store');
 
 Auth::routes();

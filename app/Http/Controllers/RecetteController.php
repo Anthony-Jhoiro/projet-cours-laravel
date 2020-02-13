@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RecetteRequest;
+use App\Recette;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class RecetteController extends Controller
@@ -10,11 +13,17 @@ class RecetteController extends Controller
 
     public function create()
     {
-        //
+        return view ('recetteEdit', ['typeFormulaire' => 'POST']);
     }
-    public function store(Request $request)
+
+    public function store(RecetteRequest $request)
     {
-        //
+        Recette::create([
+            'titre' => $request->input ('titre'),
+            'text' => $request->input ('text'),
+            'auteur' => Auth::user ()->id
+        ]);
+        return view ('/');
     }
 
     public function edit (Request $request) {
@@ -22,11 +31,6 @@ class RecetteController extends Controller
         $parametres = [
             'typeFormulaire' => 'POST'
         ];
-
-        if ($request -> ajax () ) {
-            return view('recetteEdit', $parametres)
-                -> renderSections();
-        }
         return view ('recetteEdit', $parametres);
 
 

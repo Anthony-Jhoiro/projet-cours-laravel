@@ -13,7 +13,7 @@ class RecetteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,8 @@ class RecetteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => 'bail|required|between:5,20|alpha',
-            'email' => 'bail|required|email',
-            'message' => 'bail|required|max:250'
+            'nom' => 'bail|required|between:5,255|alpha',
+            'text' => 'bail|required',
         ];
     }
 
