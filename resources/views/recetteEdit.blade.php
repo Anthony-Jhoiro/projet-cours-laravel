@@ -1,7 +1,7 @@
 @extends ('page')
 
 @section('js_head')
-    <script src="{{ asset ('js/simplemde.min.js') }}"></script>
+    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>
     <link href="{{ asset('css/simplemde.min.css') }}" rel="stylesheet">
 @endsection
 

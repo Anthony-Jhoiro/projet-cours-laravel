@@ -17,6 +17,7 @@ class CreateAssetsTable extends Migration
             $table->bigIncrements('id');
             $table->string ('url');
             $table->unsignedBigInteger('recette');
+            $table->enum('type', ['photo', 'video']);
             $table->foreign ('recette')
                 -> references ('id')
                 -> on ('recettes')
