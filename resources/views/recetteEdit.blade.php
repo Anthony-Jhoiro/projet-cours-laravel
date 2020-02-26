@@ -4,6 +4,7 @@
 {{--    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>--}}
     <link href="{{ asset('css/ressources/simplemde.min.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
 @endsection
 
 
