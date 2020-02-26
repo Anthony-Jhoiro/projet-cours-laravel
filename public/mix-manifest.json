@@ -3,7 +3,7 @@
     "/css/app.css": "/css/app.css",
     "/js/ressources/bootstrap.min.js": "/js/ressources/bootstrap.min.js",
     "/js/ressources/jquery.min.js": "/js/ressources/jquery.min.js",
-    "/js/ressources/popperjs.min.js": "/js/ressources/popperjs.min.js",
-    "/js/simplemde.min.js": "/js/simplemde.min.js",
-    "/css/simplemde.min.css": "/css/simplemde.min.css"
+    "/js/ressources/popper.min.js": "/js/ressources/popper.min.js",
+    "/js/ressources/simplemde.min.js": "/js/ressources/simplemde.min.js",
+    "/css/ressources/simplemde.min.css": "/css/ressources/simplemde.min.css"
 }

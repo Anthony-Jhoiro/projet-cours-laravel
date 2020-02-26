@@ -24,4 +24,10 @@ Route::post('/login', 'LoginController@loger');
 
 Route::get('/wow', 'RecetteController@store');
 
+Route::post('photo', 'PhotoController@store');
+
 Auth::routes();
+
+
+Route::get('/redirect', 'SocialAuthGoogleController@redirect');
+Route::get('/callback', 'SocialAuthGoogleController@callback');
