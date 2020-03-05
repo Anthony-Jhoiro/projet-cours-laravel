@@ -20,6 +20,8 @@ Route::get('recette/edition/{id}', 'RecetteController@edit')->name('recette.edit
 Route::post('recette', 'RecetteController@store')->name('recette.store');
 Route::patch('recette/{id}', 'RecetteController@update')->name('recette.update');
 
+Route::get('recette/{id}', 'RecetteController@index');
+
 Route::post('/login', 'LoginController@loger');
 
 Route::get('/wow', 'RecetteController@store');
