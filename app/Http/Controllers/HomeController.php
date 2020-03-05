@@ -24,6 +24,10 @@ class HomeController extends Controller
     public function index()
     {
         $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id');
+        foreach ($recettes as  $recette) {
+            $recette->text = substr($recette->text, 0, 255);
+            print_r($recette);
+        }
         return view('home', compact('recettes'));
     }
 }
