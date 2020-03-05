@@ -11,6 +11,10 @@
                 <h5 class="card-title"> {{ $recette->titre }}</h5>
                 <p class="card-text">{{ $recette->text }}</p>
             </div>
+            <div class="card-footer text-muted">
+                <p class="float-left"> par {{ $recette->auteur }}</p>
+                <p class="float-right">mis à jour le {{ $recette->updated_at }}</p>
+            </div>
         </div>
     @endforeach
 </div>
