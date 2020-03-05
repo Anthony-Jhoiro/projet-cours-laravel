@@ -12,8 +12,8 @@
                 <p class="card-text">{{ $recette->text }}</p>
             </div>
             <div class="card-footer text-muted">
-                <p class="float-left"> par {{ $recette->auteur }}</p>
-                <p class="float-right">mis à jour le {{ $recette->updated_at }}</p>
+                <h6 class="float-left"> par {{ $recette->auteur }}</h6>
+                <h6 class="float-right">mis à jour le {{ $recette->updated_at }}</h6>
             </div>
         </div>
     @endforeach
