@@ -60,10 +60,11 @@ class RecetteController extends Controller
 
     public function store(RecetteRequest $request)
     {
+        // Vérification de l'unicité du titre
         $recette = Recette::where('titre', $request->titre)->get();
-        Log::debug ($recette);
         if (count($recette) != 0) throw new \Exception("Le nom de la recette est déjà pris");
 
+        // Création de la recette en base
         $recette = new Recette([
             'titre' => $request->input ('titre'),
             'text' => $request->input ('text'),
@@ -71,6 +72,7 @@ class RecetteController extends Controller
         ]);
         $recette->save ();
 
+        // Ajout des assets
         $photoUrls = $request->input('photoUrls');
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
@@ -78,6 +80,10 @@ class RecetteController extends Controller
                 'recette' => $recette -> id
             ]);
         }
+
+        // Ajout des ingredients
+        $recette -> ingredients () -> attach ($request -> ingredientIds);
+
         return view ('home');
     }
 

@@ -35,4 +35,14 @@ class Recette extends Model
         return $this->hasMany('App\Assets');
     }
 
+    public function ingredients()
+    {
+        return $this->belongsToMany('App\Ingredients')
+            ->using('App\IngredientsRecette')
+            ->withPivot([
+                'created_by',
+                'updated_by'
+            ]);
+    }
+
 }
