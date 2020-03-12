@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class RecetteController extends Controller
 {
@@ -16,6 +17,14 @@ class RecetteController extends Controller
         // chargement de la recette
         $recette = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur, i.libelle FROM recettes r INNER JOIN users u ON r.auteur = u.id LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
         $recette = $recette[0];
+
+        // mise en forme de la date
+        $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
+        $moisNb = (int) $date->format('m') - 1;
+        $mois = HomeController::$lesMois[$moisNb]." ";
+        $jour = $date->format("d")." ";
+        $reste = $date->format('Y à H:i');
+        $recette->updated_at = $jour.$mois.$reste;
 
         // chargement à part des ingrédients de la recette
         $ingredients = DB::select('SELECT i.libelle FROM recettes r LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
