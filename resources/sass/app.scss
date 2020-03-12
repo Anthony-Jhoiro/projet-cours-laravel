@@ -42,7 +42,7 @@ $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-200 !default;
-$dark:          $purple !default;
+$dark:          $black !default;
 
 $yiq-contrasted-threshold: 200 !default;
 
@@ -69,4 +69,8 @@ $table-dark-border-color:     darken($dark, 5%) !default;
     height: 500px;
     object-fit: contain;
     background-color: #222;
+}
+
+.bg-black{
+    background-color: black;
 }
