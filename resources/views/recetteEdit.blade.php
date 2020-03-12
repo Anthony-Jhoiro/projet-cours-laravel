@@ -43,6 +43,16 @@
         </div>
     </form>
 
+    <select name="selectIngredient" id="selectIngredient">
+        @foreach ( as $key => $value)
+            <option value="{{ $key }}"
+                    @if ($key == old('selectIngredient', $model->option))
+                    selected="selected"
+                @endif
+            >{{ $value }}</option>
+        @endforeach
+    </select>
+
 
     <div id="carouselImage" class="carousel slide mx-auto" style="width: 600px" data-ride="carousel">
         <ol class="carousel-indicators" id="indicators-container">
@@ -67,13 +77,30 @@
 
 @section('js')
     <script type="text/javascript">
-        photoUrls = [];
-        let imageContainerSize = 1;
+
+
         // var simplemde = new SimpleMDE();
 
 
 
         $(() => {
+
+            let ingredientsListe = [];
+            let photoUrls = [];
+            let imageContainerSize = 1;
+
+            $.ajax({
+                method: 'get',
+                url: '/ingredients'
+            }).done(data => {
+                ingredientsListe = data;
+                ingredientsListe.forEach(item => {
+                    $('#selectIngredient').append('<option value="'+item.id+'">'+ item.libelle +'</option>')
+                })
+            });
+
+
+
             console.log("hello");
             $.ajaxSetup({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
