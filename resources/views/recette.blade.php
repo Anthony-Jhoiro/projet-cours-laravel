@@ -2,7 +2,7 @@
 
 @section('body')
     
-    <div class="container bg-light">
+    <div class="container bg-light rounded">
         <h3 class="mx-auto text-center">{{$recette->titre}}</h3>
         <div class="row">
             <div class="col-md-3">
@@ -17,9 +17,9 @@
             </div>
             <p class="col">{{ $recette->text }}</p>
         </div>
-        <div class="row bg-secondary">
-            <h6 class="col-md-6"> par {{ $recette->auteur }}</h6>
-            <h6 class="text-right col-md-6">mis à jour le {{ $recette->updated_at }}</h6>
+        <div class="row bg-secondary rounded">
+            <h6 class="col-md-6 pt-2 pb-2"> par {{ $recette->auteur }}</h6>
+            <h6 class="text-right col-md-6 pt-2 pb-2">mis à jour le {{ $recette->maj }}</h6>
         </div>
     </div>
 @endsection
