@@ -1,9 +1,6 @@
 @extends ('page')
 
 @section('body')
-    <?php
-        print_r($recette);
-    ?>
     
     <div class="container bg-light">
         <h3 class="mx-auto text-center">{{$recette->titre}}</h3>
@@ -19,6 +16,10 @@
                 </div>
             </div>
             <p class="col">{{ $recette->text }}</p>
+        </div>
+        <div class="row bg-secondary">
+            <h6 class="col-md-6"> par {{ $recette->auteur }}</h6>
+            <h6 class="text-right col-md-6">mis à jour le {{ $recette->updated_at }}</h6>
         </div>
     </div>
 @endsection
