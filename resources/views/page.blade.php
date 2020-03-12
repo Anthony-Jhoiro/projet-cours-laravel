@@ -7,15 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Casrollton</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
 
 
     <!-- Javascript -->
     @yield('js_head')
 
-    <script src="{{ asset ('js/ressources/popper.min.js') }}"></script>
-    <script src="{{ asset ('js/ressources/jquery.min.js') }}"></script>
-    <script src="{{ asset ('js/ressources/bootstrap.min.js') }}"></script>
+{{--    <script src="{{ asset ('js/ressources/popper.min.js') }}"></script>--}}
+{{--    <script src="{{ asset ('js/ressources/jquery.min.js') }}"></script>--}}
+{{--    <script src="{{ asset ('js/ressources/bootstrap.min.js') }}"></script>--}}
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>

@@ -12,10 +12,12 @@ const mix = require('laravel-mix');
  */
 
 mix .js('resources/js/app.js', 'public/js')
+    // .autoload({
+    //     'popper.js/dist/umd/popper.js': ['Popper']
+    // })
     .sass('resources/sass/app.scss', 'public/css')
     .copy('node_modules/simplemde/dist/simplemde.min.js', 'public/js/ressources/simplemde.min.js')
     .copy('node_modules/simplemde/dist/simplemde.min.css', 'public/css/ressources/simplemde.min.css')
-    .js('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js/ressources/bootstrap.min.js')
-    .js('node_modules/jquery/dist/jquery.min.js', 'public/js/ressources/jquery.min.js')
-    .js('node_modules/popper.js/dist/popper.min.js', 'public/js/ressources/popper.min.js');
-
+    .js('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js/ressources')
+    .js('node_modules/jquery/dist/jquery.min.js', 'public/js/ressources')
+    .js('node_modules/popper.js/dist/popper.min.js', 'public/js/ressources/').sourceMaps();

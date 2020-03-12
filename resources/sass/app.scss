@@ -61,3 +61,12 @@ $table-dark-border-color:     darken($dark, 5%) !default;
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.img-carrous {
+    max-width: 600px;
+    max-height: 500px;
+    width: 600px;
+    height: 500px;
+    object-fit: contain;
+    background-color: #222;
+}

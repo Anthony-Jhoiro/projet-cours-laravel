@@ -8,6 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+try {
+    window.$ = window.jQuery = require('jquery');
+    window.Popper = Popper;
+    require('bootstrap');
+} catch (e) {
+    console.error(e);
+}
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
