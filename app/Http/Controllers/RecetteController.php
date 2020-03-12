@@ -13,8 +13,21 @@ use Illuminate\Support\Facades\DB;
 class RecetteController extends Controller
 {
     public function index(Request $request, $id){
-        $recette = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id WHERE r.id = ?', [$id]);
+        // chargement de la recette
+        $recette = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur, i.libelle FROM recettes r INNER JOIN users u ON r.auteur = u.id LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
         $recette = $recette[0];
+
+        // chargement à part des ingrédients de la recette
+        $ingredients = DB::select('SELECT i.libelle FROM recettes r LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
+        $ingredientsList = [];
+        foreach ($ingredients as $ingredient) {
+            array_push($ingredientsList, $ingredient->libelle);
+        }
+
+        // ajout des ingrédients dans la recette
+        $recette -> ingredients = $ingredientsList;
+
+        // chargement de la vue
         return view('recette', compact('recette'));
     }
 
