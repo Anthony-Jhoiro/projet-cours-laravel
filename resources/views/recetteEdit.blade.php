@@ -1,7 +1,7 @@
 @extends ('page')
 
 @section('js_head')
-    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>
+{{--    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>--}}
     <link href="{{ asset('css/ressources/simplemde.min.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -9,6 +9,7 @@
 
 
 @section('body')
+    <p id="errorText" class="text-danger"></p>
 
     <form id="formulairePrincipal" action="{{  ($id == -1)? route('recette.store') : route('recette.update', ['id' => $id]) }}" method="POST">
         @if($typeFormulaire == "PATCH")
@@ -22,13 +23,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Nom de votre recette</span>
                 </div>
-                <input type="text" name="titre" class="form-control @error('nom') is-invalid @enderror"  placeholder="Nom de la recette" value="{{ old('nom', $recette->titre) }}">
+                <input type="text" name="titre" id="titre" class="form-control @error('nom') is-invalid @enderror"  placeholder="Nom de la recette" value="{{ old('nom', $recette->titre) }}">
                 @error('titre')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
         </div>
-        <textarea cols="30" rows="10" name="text">{{ old ('text', $recette->text) }}</textarea>
+        <textarea cols="30" rows="10" name="text" id="text">{{ old ('text', $recette->text) }}</textarea>
         <input class="btn btn-primary" type="submit" value="Envoyer !">
     </form>
 
@@ -66,8 +67,9 @@
 
 @section('js')
     <script type="text/javascript">
+        photoUrls = [];
         let imageContainerSize = 1;
-        var simplemde = new SimpleMDE();
+        // var simplemde = new SimpleMDE();
 
 
 
@@ -82,6 +84,7 @@
                 // let that = e.currentTarget;
                 // console.log($('#file').val());
                 let form = $('#formulaireImage')[0];
+                console.log(form);
                 let fd = new FormData(form);
                 console.log(fd);
                 $.ajax({
@@ -93,6 +96,7 @@
                 })
                     .done((data) => {
                         console.log(data);
+                        photoUrls.push(data);
                         $('.carousel-item.active ').removeClass('active');
                         $('#imagesCarousel').append('<div class="carousel-item active">\n' +
                             '                <img class="d-block w-100 img-carrous" src="/'+data+'" alt="slide">\n' +
@@ -109,22 +113,23 @@
 
             $('#formulairePrincipal').submit((e) => {
                 e.preventDefault();
-                var fd = new FormData($('#formulairePrincipal').get(0));
+                let titre = $('#titre').val();
+                let text = $('#text').val();
                 $.ajax({
                     method: 'post',
-                    url: '/photo',
-                    data: fd,
-                    processData: false,
-                    contentType: false,
+                    url: '/recette',
+                    data: {
+                        titre: titre,
+                        text: text,
+                        photoUrls: photoUrls
+                    },
                 })
                     .done((data) => {
                         console.log(data);
-                        $('#imagesCarousel').append('<div class="carousel-item active">\n' +
-                            '                <img class="d-block w-100" src="/'+data+'" alt="slide">\n' +
-                            '            </div>')
                     })
                     .fail((data) => {
-                        console.error(data);
+                        console.log(data.responseText.message);
+                        $('#errorText').html(JSON.parse(data.responseText).message);
                     });
             });
         });

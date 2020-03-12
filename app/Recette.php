@@ -18,4 +18,9 @@ class Recette extends Model
      */
     protected $table = 'recettes';
 
+    public function assets()
+    {
+        return $this->hasMany('App\Assets');
+    }
+
 }
