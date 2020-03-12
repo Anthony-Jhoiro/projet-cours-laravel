@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Assets;
 use App\Http\Requests\RecetteRequest;
 use App\Recette;
 use Illuminate\Http\Request;
@@ -30,12 +31,25 @@ class RecetteController extends Controller
 
     public function store(RecetteRequest $request)
     {
-        Recette::create([
+        $recette = Recette::where('titre', $request->titre)->get();
+        Log::debug ($recette);
+        if (count($recette) != 0) throw new \Exception("Le nom de la recette est déjà pris");
+
+        $recette = new Recette([
             'titre' => $request->input ('titre'),
             'text' => $request->input ('text'),
             'auteur' => Auth::user ()->id
         ]);
-        return view ('/');
+        $recette->save ();
+
+        $photoUrls = $request->input('photoUrls');
+        foreach ($photoUrls as $photoUrl) {
+            Assets::create([
+                'url' => $photoUrl,
+                'recette' => $recette -> id
+            ]);
+        }
+        return view ('home');
     }
 
     public function update(Request $request, $n)
