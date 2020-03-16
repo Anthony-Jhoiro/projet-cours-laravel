@@ -40,8 +40,15 @@ class RecetteController extends Controller
             array_push($ingredientsList, $ingredient->libelle);
         }
 
-        // ajout des ingrédients dans la recette
-        $recette -> ingredients = $ingredientsList;
+        // creation de l'objet recette
+        $recette = new Recette($recette->titre, $recette->text, $recette->auteur, $recette->updated_at, $ingredientsList, []);
+
+        // chargements des assets de la recette
+        $assets = DB::select('SELECT url, type FROM assets WHERE id = ?', [$id]);
+        foreach ($assets as $asset) {
+            $asset = new Assets($asset->url, $id, $asset->type);
+            array_push($recette->assets, $asset);
+        }
 
         // chargement de la vue
         return view('recette', compact('recette'));

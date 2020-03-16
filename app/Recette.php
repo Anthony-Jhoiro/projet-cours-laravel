@@ -9,7 +9,10 @@ class Recette extends Model
     protected $fillable = [
         'titre',
         'text',
-        'auteur'
+        'auteur',
+        'maj',
+        'ingredients',
+        'assets'
     ];
     /**
      * The table associated with the model.
@@ -17,6 +20,15 @@ class Recette extends Model
      * @var string
      */
     protected $table = 'recettes';
+
+    public function __construct(string $titre, string $text, string $auteur, string $maj, array $ingredients, array $assets){
+        $this->titre = $titre;
+        $this->text = $text;
+        $this->auteur = $auteur;
+        $this->maj = $maj;
+        $this->ingredients = $ingredients;
+        $this->assets = $assets;
+    }
 
     public function assets()
     {
