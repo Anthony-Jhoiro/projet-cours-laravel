@@ -74,3 +74,34 @@ $table-dark-border-color:     darken($dark, 5%) !default;
 .bg-black{
     background-color: black;
 }
+
+.recetteContent {
+    h1 {
+        color: $primary;
+        font-size: 2rem;
+        margin-bottom: .1em;
+        &:before {
+            content: '#   ';
+        }
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    *:not(h1) {
+        margin-left: 2rem;
+    }
+}
+
+.recetteTitre {
+    color: $primary;
+    font-size: 2.5rem;
+}
+
+#summary .list-group-item:hover {
+    background-color: rgba($primary, 0.5);
+    color: #fff;
+    text-decoration: underline;
+}
+

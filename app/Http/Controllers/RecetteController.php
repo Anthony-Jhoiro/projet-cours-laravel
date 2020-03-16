@@ -16,8 +16,13 @@ class RecetteController extends Controller
 {
     public function index(Request $request, $id){
         // chargement de la recette
+        // TODO : use Eloquent
         $recette = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur, i.libelle FROM recettes r INNER JOIN users u ON r.auteur = u.id LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
         $recette = $recette[0];
+
+        // Convertion du markdown au html
+        $parser = new \Parsedown();
+        $recette->text =  $parser->text($recette->text);
 
         // mise en forme de la date
         $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
@@ -28,6 +33,7 @@ class RecetteController extends Controller
         $recette->updated_at = $jour.$mois.$reste;
 
         // chargement à part des ingrédients de la recette
+        // TODO : use Eloquent
         $ingredients = DB::select('SELECT i.libelle FROM recettes r LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
         $ingredientsList = [];
         foreach ($ingredients as $ingredient) {

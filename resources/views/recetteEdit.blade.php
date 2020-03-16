@@ -1,7 +1,7 @@
 @extends ('page')
 
 @section('js_head')
-{{--    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>--}}
+    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>
     <link href="{{ asset('css/ressources/simplemde.min.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -43,15 +43,6 @@
         </div>
     </form>
 
-    <select name="selectIngredient" id="selectIngredient">
-        @foreach ( as $key => $value)
-            <option value="{{ $key }}"
-                    @if ($key == old('selectIngredient', $model->option))
-                    selected="selected"
-                @endif
-            >{{ $value }}</option>
-        @endforeach
-    </select>
 
 
     <div id="carouselImage" class="carousel slide mx-auto" style="width: 600px" data-ride="carousel">
@@ -78,8 +69,7 @@
 @section('js')
     <script type="text/javascript">
 
-
-        // var simplemde = new SimpleMDE();
+        var simplemde = new SimpleMDE();
 
 
 

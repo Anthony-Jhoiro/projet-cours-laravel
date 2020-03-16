@@ -11370,3 +11370,33 @@ a.text-dark:focus {
   background-color: black;
 }
 
+.recetteContent h1 {
+  color: #E95420;
+  font-size: 2rem;
+  margin-bottom: 0.1em;
+}
+
+.recetteContent h1:before {
+  content: "#   ";
+}
+
+.recetteContent h1:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.recetteContent *:not(h1) {
+  margin-left: 2rem;
+}
+
+.recetteTitre {
+  color: #E95420;
+  font-size: 2.5rem;
+}
+
+#summary .list-group-item:hover {
+  background-color: rgba(233, 84, 32, 0.5);
+  color: #fff;
+  text-decoration: underline;
+}
+
