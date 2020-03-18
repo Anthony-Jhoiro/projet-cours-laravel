@@ -1,5 +1,7 @@
 # Cassrolton
 
+![Laravel](https://github.com/Anthony-Jhoiro/projet-cours-laravel/workflows/Laravel/badge.svg)
+
 ## Mise en place
 
 ### Installation
