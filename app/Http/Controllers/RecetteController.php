@@ -35,11 +35,9 @@ class RecetteController extends Controller
         $mois = HomeController::$lesMois[$moisNb]." ";
         $jour = $date->format("d")." ";
         $reste = $date->format('Y à H:i');
-        $dateModification = $jour.$mois.$reste;
+        $recette->formatDate = $jour.$mois.$reste;
 
         $recette->auteurNom = $recette->author->name;
-
-        Log::debug ($recette->auteurNom);
 
         // chargement des ingrédients de la recette
         $recette->ingredients = $recette->getIngredients;
