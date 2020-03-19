@@ -21,3 +21,6 @@ mix .js('resources/js/app.js', 'public/js')
     .js('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js/ressources')
     .js('node_modules/jquery/dist/jquery.min.js', 'public/js/ressources')
     .js('node_modules/popper.js/dist/popper.min.js', 'public/js/ressources/').sourceMaps();
+
+
+mix.copy('resources/js/pages/recetteEdit.js', 'public/js/pages/recetteEdit.js');

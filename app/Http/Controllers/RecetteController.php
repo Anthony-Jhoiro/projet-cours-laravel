@@ -15,10 +15,15 @@ use DateTime;
 class RecetteController extends Controller
 {
     public function index(Request $request, $id){
+        /**
+         * @var Recette $recette
+         */
         // chargement de la recette
-        // TODO : use Eloquent
-        $recette = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur, i.libelle FROM recettes r INNER JOIN users u ON r.auteur = u.id LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
-        $recette = $recette[0];
+        $recette = Recette::find($id);
+
+        // Sil recette n'existe pas on renvoie une erreure 404
+        if ($recette == NULL) abort (404);
+
 
         // Convertion du markdown au html
         $parser = new \Parsedown();
@@ -30,28 +35,21 @@ class RecetteController extends Controller
         $mois = HomeController::$lesMois[$moisNb]." ";
         $jour = $date->format("d")." ";
         $reste = $date->format('Y à H:i');
-        $recette->updated_at = $jour.$mois.$reste;
+        $dateModification = $jour.$mois.$reste;
 
-        // chargement à part des ingrédients de la recette
-        // TODO : use Eloquent
-        $ingredients = DB::select('SELECT i.libelle FROM recettes r LEFT JOIN recette_ingredient ri ON r.id = ri.id_recette LEFT JOIN ingredients i ON ri.id_ingredient = i.id WHERE r.id = ?', [$id]);
-        $ingredientsList = [];
-        foreach ($ingredients as $ingredient) {
-            array_push($ingredientsList, $ingredient->libelle);
-        }
+        $recette->auteurNom = $recette->author->name;
 
-        // creation de l'objet recette
-        $recette = new Recette($recette->titre, $recette->text, $recette->auteur, $recette->updated_at, $ingredientsList, []);
+        Log::debug ($recette->auteurNom);
+
+        // chargement des ingrédients de la recette
+        $recette->ingredients = $recette->getIngredients;
+
 
         // chargements des assets de la recette
-        $assets = DB::select('SELECT url, type FROM assets WHERE id = ?', [$id]);
-        foreach ($assets as $asset) {
-            $asset = new Assets($asset->url, $id, $asset->type);
-            array_push($recette->assets, $asset);
-        }
+        $recette->assets = $recette->getAssets;
 
-        // chargement de la vue
-        return view('recette', compact('recette'));
+        // On retourne de la vue
+        return view('recette', compact ('recette'));
     }
 
     public function create()

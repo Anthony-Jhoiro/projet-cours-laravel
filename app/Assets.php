@@ -8,7 +8,7 @@ class Assets extends Model
 {
     protected $fillable = [
         'url',
-        'recette',
+        'recette_id',
         'type'
     ];
     /**
@@ -18,9 +18,4 @@ class Assets extends Model
      */
     protected $table = 'assets';
 
-    public function __construct(string $url, int $recette, string $type){
-        $this->url = $url;
-        $this->recette = $recette;
-        $this->type = $type;
-    }
 }

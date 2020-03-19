@@ -12,11 +12,6 @@ class Ingredients extends Model
 
     public function recettes()
     {
-        return $this->belongsToMany('App\Recette')
-            ->using('App\IngredientsRecette')
-            ->withPivot([
-                'created_by',
-                'updated_by'
-            ]);
+        return $this->belongsToMany('App\Recette', 'recette_ingredient', 'id_ingredient', 'id_recette');
     }
 }

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class IngredientsRecette extends Pivot
 {
-    protected $table = 'recette_ingredients';
+    protected $table = 'recette_ingredient';
 
 }

@@ -16,9 +16,9 @@ class CreateAssetsTable extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string ('url');
-            $table->unsignedBigInteger('recette');
+            $table->unsignedBigInteger('recette_id');
             $table->enum('type', ['photo', 'video']);
-            $table->foreign ('recette')
+            $table->foreign ('recette_id')
                 -> references ('id')
                 -> on ('recettes')
                 -> onUpdate ('cascade')
