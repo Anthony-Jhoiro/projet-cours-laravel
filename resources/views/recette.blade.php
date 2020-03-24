@@ -52,7 +52,7 @@
                     <h4>Ingredients : </h4>
                     <ul class="list-group list-group-flush">
                         @foreach($recette->ingredients as $ingredient)
-                            <li class="list-group-item bg-light">{{ $ingredient }}</li>
+                            <li class="list-group-item bg-light">{{ $ingredient->libelle }}</li>
                         @endforeach
                     </ul>
                 </div>
