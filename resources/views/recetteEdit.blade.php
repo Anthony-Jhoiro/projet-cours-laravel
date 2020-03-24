@@ -1,13 +1,11 @@
 @extends ('page')
 
-@push('head')
-    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>
-    <script src="{{ asset ('js/pages/recetteEdit.js') }}"></script>
-    <link href="{{ asset('css/ressources/simplemde.min.css') }}" rel="stylesheet">
+@section('js_head')
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@endpush
+@endsection
 
 
 @section('body')
@@ -32,7 +30,20 @@
             </div>
         </div>
         <textarea cols="30" rows="10" name="text" id="text">{{ old ('text', $recette->text) }}</textarea>
-        <input class="btn btn-primary" type="submit" value="Envoyer !">
+            <div class="d-flex flex-row mb-2 flex-wrap">
+                @foreach($categories as $key => $value)
+                    <div class="p-2">
+                        <label for="chkCat_{{$value->id}}" class="checklist-element">
+                            <input class="d-none categorie-checkbox" type="checkbox" name="chkCat_{{$value->id}}" id="chkCat_{{$value->id}}">
+                            <span class="badge badge-pill badge-light checkbox-label">
+                        {{$value->libelle}}
+                    </span>
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+
+            <input class="btn btn-primary mb-3" type="submit" value="Envoyer !">
     </form>
 
     <form action="{{ url('photo') }}" action="POST" id="formulaireImage" enctype="multipart/form-data">
@@ -65,6 +76,9 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+
+    <script src="{{ asset ('js/ressources/simplemde.min.js') }}"></script>
+    <script src="{{ asset ('js/pages/recetteEdit.js') }}"></script>
 
 @endsection
 

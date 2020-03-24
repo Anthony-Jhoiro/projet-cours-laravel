@@ -36,6 +36,10 @@ class Recette extends Model
         return $this->belongsToMany('App\Ingredients', 'recette_ingredient', 'id_recette', 'id_ingredient');
     }
 
+    public function getCategories() {
+        return $this -> belongsToMany ('App\Categorie', 'recette_categorie', 'id_recette', 'id_categorie');
+    }
+
     public function author() {
         return $this->belongsTo ('App\User', 'auteur', 'id');
     }

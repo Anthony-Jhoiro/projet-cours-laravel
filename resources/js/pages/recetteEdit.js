@@ -60,15 +60,24 @@ $(() => {
 
     $('#formulairePrincipal').submit((e) => {
         e.preventDefault();
-        let titre = $('#titre').val();
-        let text = $('#text').val();
+        const titre = $('#titre').val();
+        const text = $('#text').val();
+
+        let categories = [];
+        let checkBoxes = $('.categorie-checkbox');
+        checkBoxes.each((i, e) => {
+            if ($(e).is(':checked')) categories.push($(e).attr('name').split('_')[1]);
+        });
+
+
         $.ajax({
             method: 'post',
             url: '/recette',
             data: {
                 titre: titre,
                 text: text,
-                photoUrls: photoUrls
+                photoUrls: photoUrls,
+                categories: categories
             },
         })
             .done((data) => {

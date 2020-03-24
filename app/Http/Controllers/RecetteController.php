@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Assets;
+use App\Categorie;
 use App\Http\Requests\RecetteRequest;
 use App\Recette;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -55,7 +57,8 @@ class RecetteController extends Controller
         $parametres = [
             'typeFormulaire' => 'POST',
             'recette' => new Recette(),
-            'id' => -1
+            'id' => -1,
+            'categories' => Categorie::all()
         ];
         return view ('recetteEdit', $parametres);
     }
@@ -72,27 +75,31 @@ class RecetteController extends Controller
             'text' => $request->input ('text'),
             'auteur' => Auth::user ()->id
         ]);
-        $recette->save ();
+
+        $recette -> save ();
+
+        $id = $recette ->id;
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
                 'url' => $photoUrl,
-                'recette' => $recette -> id
+                'recette_id' => $recette -> id
             ]);
         }
 
         // Ajout des ingredients
-        $recette -> ingredients () -> attach ($request -> ingredientIds);
+        $recette -> getIngredients () -> attach ($request -> ingredientIds);
 
-        return view ('home');
+        Log::debug ($request -> categories);
+        $recette -> getCategories () -> attach($request -> categories);
+
+        return self::index ();
     }
 
     public function update(Request $request, $n)
     {
-
-        Log::debug ("Update !");
         $recette = Recette::find($n);
         $recette->titre = $request->input ('titre');
         $recette->titre = $request->input ('text');
