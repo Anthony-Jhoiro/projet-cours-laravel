@@ -22,6 +22,8 @@ Route::patch('recette/{id}', 'RecetteController@update')->name('recette.update')
 
 Route::get('recette/{id}', 'RecetteController@index');
 
+Route::get('recettes/{nom}',  'RecetteController@list')->name('recette.liste');
+
 Route::post('/login', 'LoginController@loger');
 
 Route::get('/wow', 'RecetteController@store');
