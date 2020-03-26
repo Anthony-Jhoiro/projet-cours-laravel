@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -39,6 +41,12 @@ class LoginController extends Controller
     }
 
     public function loger(){
-        return view('login');
+        Log::debug ("coucou");
+        try {
+            $sections = view ( 'login' ) -> renderSections ();
+            return $sections['body'];
+        } catch (\Throwable $e) {
+            return $e;
+        }
     }
 }

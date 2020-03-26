@@ -61,6 +61,7 @@ $table-dark-border-color:     darken($dark, 5%) !default;
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "~simplemde/dist/simplemde.min.css";
 
 .img-carrous {
     max-width: 600px;
@@ -105,3 +106,16 @@ $table-dark-border-color:     darken($dark, 5%) !default;
     text-decoration: underline;
 }
 
+.checklist-element {
+    span {
+        font-size: 1rem;
+    }
+    span:hover {
+        color: $primary;
+    }
+
+    input:checked + span {
+        background-color: $primary;
+        color: $white;
+    }
+}

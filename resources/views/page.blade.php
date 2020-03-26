@@ -46,7 +46,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Connexion</a>
+                    <a id="connexionLink" class="nav-link" href="/login">Connexion</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Créer un compte</a>
@@ -65,6 +65,34 @@
 <div class="container mt-2" id="body">
     @yield('body')
 </div>
+
+<div class="modal fade " id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content m-5" id="modalBody">
+            @yield('modalContent')
+        </div>
+    </div>
+</div>
+<script>
+    $(() => {
+        $('#connexionLink').click(e => {
+            e.preventDefault();
+            $.ajax({
+                url: '/login',
+                method: 'get',
+                success: data => {
+                    console.log(data)
+                    console.log($(data).find('div'))
+                    $('#modalBody').html($(data).find('div.container').html());
+                    $('#modal').modal({
+                        show: true
+                    })
+                },
+                error: err => console.err(err)
+            })
+        })
+    })
+</script>
 @yield('js')
 <script type="text/javascript">
     $('#submit').click(() => {
