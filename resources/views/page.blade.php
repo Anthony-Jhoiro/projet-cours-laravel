@@ -56,8 +56,8 @@
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="nom" id="nom" placeholder="Votre nom" value="{{ old('nom') }}">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher une recette</button>
+            <input id="recherche" class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="nom" id="nom" placeholder="Votre nom" value="{{ old('nom') }}">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="submit">Rechercher une recette</button>
         </form>
     </div>
 </nav>
@@ -94,5 +94,12 @@
     })
 </script>
 @yield('js')
+<script type="text/javascript">
+    $('#submit').click(() => {
+        nom = $('#recherche').val();
+        console.log(nom);
+        
+    })
+</script>
 </body>
 </html>

@@ -24,9 +24,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id');
+        $url = $request->fullUrl();
+        $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id LIMIT 30');
         foreach ($recettes as  $recette) {
             $recette->text = substr($recette->text, 0, HomeController::$nbCaractere)."...";
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
