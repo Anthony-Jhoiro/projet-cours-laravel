@@ -92,7 +92,6 @@ class RecetteController extends Controller
         // Ajout des ingredients
         $recette -> getIngredients () -> attach ($request -> ingredientIds);
 
-        Log::debug ($request -> categories);
         $recette -> getCategories () -> attach($request -> categories);
 
         return self::index ();

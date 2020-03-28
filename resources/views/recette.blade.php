@@ -1,5 +1,12 @@
 @extends ('page')
 
+@section('js_head')
+
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+@endsection
+
 @section('aside')
 
     <aside class="position-fixed mt-4 ml-2">
@@ -45,7 +52,7 @@
             @endif
             <div class="col-md-6">
                 <div>
-                    <h3>Par {{ $recette->auteurNom }}</h3>
+                    <h3>Par {{ $recette->auteurNom }} @auth <button class="btn btn-info" id="follow_btn" auteur="{{$recette->auteur}}">Suivre !</button> @endauth</h3>
                     <h6> Mis à jour le {{ $recette->formatDate }}</h6>
                 </div>
                 <div>
@@ -69,6 +76,11 @@
 
     <script>
         $(() => {
+
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+
             let ids = 0;
             let summary = $('#summary');
             h1s = $('.recetteContent h1');
@@ -76,6 +88,21 @@
                 $(this).attr('id', 'titre_' + ids);
                 summary.append('<li><a href="#titre_' + ids + '" class="list-group-item py-1">' + $(this).text() + '</a></li>')
                 ids++;
+            });
+
+            $('#follow_btn').click(e => {
+                const id = $('#follow_btn').attr('auteur');
+                let fd = new FormData();
+                console.log('id => '+id)
+                fd.append('id', id);
+                $.ajax({
+                    method: 'post',
+                    url: '/social',
+                    data: { id: id }
+                }).done(data => {
+                    console.log(data);
+                })
+
             });
         });
 
