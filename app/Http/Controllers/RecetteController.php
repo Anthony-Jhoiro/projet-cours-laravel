@@ -76,9 +76,8 @@ class RecetteController extends Controller
             'auteur' => Auth::user ()->id
         ]);
 
+        Log::debug ($recette);
         $recette -> save ();
-
-        $id = $recette ->id;
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');

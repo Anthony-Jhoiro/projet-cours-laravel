@@ -22,7 +22,7 @@ class AuthentificationTest extends TestCase
         $this->assertTrue (true);
 
 //        $this->userCanAccessLoginForm ();
-//        $this->userCanNotAccessLoginFormIfLogin ();
+//        $this->userCanNotAccessL/oginFormIfLogin ();
 //        $this->userCanLoginWithCorrectCredentials ();
     }
 
