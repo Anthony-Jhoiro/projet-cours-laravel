@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Recette;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -26,17 +28,19 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $url = $request->fullUrl();
-        $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id LIMIT 30');
+        $recettes = Recette::all (); // TODO : Add offsets
         foreach ($recettes as  $recette) {
             $recette->text = substr($recette->text, 0, HomeController::$nbCaractere)."...";
+
+            // TODO : Rework all of this
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
             $moisNb = (int) $date->format('m') - 1;
             $mois = HomeController::$lesMois[$moisNb]." ";
             $jour = $date->format("d")." ";
             $reste = $date->format('Y à H:i');
-            $recette->updated_at = $jour.$mois.$reste;
+            $recette->updated_att = $jour.$mois.$reste;
         }
+        if ($recettes == null) Log::debug ($recettes);
         return view('home', compact('recettes'));
     }
 }

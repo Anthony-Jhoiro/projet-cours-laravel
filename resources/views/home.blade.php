@@ -14,7 +14,7 @@
             </div>
             <div class="card-footer text-muted">
                 <h6 class="float-left"> par {{ $recettes[$i]->auteur }}</h6>
-                <h6 class="float-right">mis à jour le {{ $recettes[$i]->updated_at }}</h6>
+                <h6 class="float-right">mis à jour le {{ $recettes[$i]->updated_att }}</h6>
             </div>
         </div>
         @if($i % 2 == 1)

@@ -23,6 +23,9 @@
 
 </head>
 <body>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="/">Cassrollton</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +45,7 @@
                     <a class="nav-link" href="#">Mon compte</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Déconnexion</a>
+                    <a class="nav-link" href="{{ route('logout') }}" id="deconnexionButton">Déconnexion</a>
                 </li>
                 @else
                 <li class="nav-item">
@@ -90,7 +93,12 @@
                 },
                 error: err => console.err(err)
             })
-        })
+        });
+
+        $('#deconnexionButton').click(e => {
+            e.preventDefault();
+            document.getElementById('logout-form').submit();
+        });
     })
 </script>
 @yield('js')
@@ -98,7 +106,7 @@
     $('#submit').click(() => {
         nom = $('#recherche').val();
         console.log(nom);
-        
+
     })
 </script>
 </body>
