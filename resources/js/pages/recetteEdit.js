@@ -1,13 +1,24 @@
-
 var simplemde = new SimpleMDE();
-
 
 
 $(() => {
 
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+
     let ingredientsListe = [];
+    let ingredientsListeForRecette = [];
     let photoUrls = [];
     let imageContainerSize = 1;
+
+    let addEventOnDropDownItems = () => {
+
+        $('.ingredient-item').click(function() {
+            ingredientsListeForRecette.push({ libelle: $(this).text(), id: $(this).attr('value') });
+            $('#listeIngredient').append(" <li class=\"list-group-item p-1\">" + $(this).text() + "</li>");
+        });
+    };
 
     $.ajax({
         method: 'get',
@@ -15,16 +26,42 @@ $(() => {
     }).done(data => {
         ingredientsListe = data;
         ingredientsListe.forEach(item => {
-            $('#selectIngredient').append('<option value="'+item.id+'">'+ item.libelle +'</option>')
-        })
+            $('#selectIngredient').append('<li class="dropdown-item ingredient-item" value="' + item.id + '">' + item.libelle + '</li>')
+        });
+        addEventOnDropDownItems();
     });
 
 
 
-    console.log("hello");
-    $.ajaxSetup({
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    $('#ajouterIngredient').click(() => {
+        let text = $('#ingredientValue').val();
+
+        if (text.length > 0 && ingredientsListe.filter(v => v.libelle.toUpperCase() === text.toUpperCase()).length === 0) {
+
+            $.ajax({
+                method: 'post',
+                url: '/ingredients',
+                data: {libelle: text}
+            }).done(data => {
+                if (data)
+                {
+                    ingredientsListe = data;
+                    $('#selectIngredient').html("");
+                    ingredientsListe.forEach(item => {
+                        $('#selectIngredient').append('<li class="dropdown-item ingredient-item" value="' + item.id + '">' + item.libelle + '</li>');
+                    });
+                    addEventOnDropDownItems();
+                }
+
+            })
+
+        }
     });
+
+
+
+
+
 
     $('#file').change((e) => {
         // e.preventDefault();
@@ -46,16 +83,15 @@ $(() => {
                 photoUrls.push(data);
                 $('.carousel-item.active ').removeClass('active');
                 $('#imagesCarousel').append('<div class="carousel-item active">\n' +
-                    '                <img class="d-block w-100 img-carrous" src='+data+'"/" alt="slide">\n' +
+                    '                <img class="d-block w-100 img-carrous" src=' + data + '"/" alt="slide">\n' +
                     '            </div>');
-                $('#indicators-container').append('<li data-target="#carouselImage" data-slide-to="'+imageContainerSize+'"></li>');
+                $('#indicators-container').append('<li data-target="#carouselImage" data-slide-to="' + imageContainerSize + '"></li>');
                 imageContainerSize++;
             })
             .fail((data) => {
                 console.error(data);
             });
     });
-
 
 
     $('#formulairePrincipal').submit((e) => {

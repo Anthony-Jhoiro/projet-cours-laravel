@@ -16,14 +16,16 @@ class IngredientController extends Controller
     public function store(IngredientRequest $request) {
 
         // test if ingredient exist in database
-        $ingredients = Ingredients::with (['libelle', $request->get ('libelle')]);
+        $ingredients = Ingredients::where (['libelle' => $request->get ('libelle')]);
 
-        if (! ($ingredients->get ()->isEmpty ())) {
+        if ($ingredients->first() != NULL) {
             return;
         }
 
         // add the ingredient
         Ingredients::create(['libelle' => $request->get ('libelle')]);
+
+        return self::get ();
 
     }
 }
