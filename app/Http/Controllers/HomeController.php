@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Recette;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +27,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $recettes = Recette::all (); // TODO : Add offsets
+        if(isset($_GET['s']) && !empty($_GET['s'])){
+            $filtre = '%' . $_GET['s'] . '%';
+            $recettes = DB::select(DB::raw("SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id WHERE r.titre LIKE '?' LIMIT 30", [ $filtre ]));
+        }
+        else {
+            $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id LIMIT 30');
+        }
         foreach ($recettes as  $recette) {
             $recette->text = substr($recette->text, 0, HomeController::$nbCaractere)."...";
 

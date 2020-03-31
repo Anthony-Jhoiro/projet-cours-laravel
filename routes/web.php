@@ -13,6 +13,7 @@
 
 Route::redirect('/', '/home');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@filtre')->name('home');
 
 
 Route::middleware(['auth']) -> group(function () {
