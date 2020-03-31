@@ -55,10 +55,10 @@
 
 
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input id="recherche" class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="nom" id="nom" placeholder="Votre nom" value="{{ old('nom') }}">
+        <div class="form-inline my-2 my-lg-0">
+            <input id="recherche" class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="filtre" placeholder="rechercher" value="{{ old('nom') }}">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="submit">Rechercher une recette</button>
-        </form>
+        </div>
     </div>
 </nav>
 @yield('aside')
@@ -94,11 +94,13 @@
     })
 </script>
 @yield('js')
-<script type="text/javascript">
+<script>
+
     $('#submit').click(() => {
-        nom = $('#recherche').val();
-        console.log(nom);
-        
+        let search = $('#recherche')[0].value; 
+        if(search != ""){       
+            window.location.href = "/home?s=" + search + "&l=1";
+        }
     })
 </script>
 </body>

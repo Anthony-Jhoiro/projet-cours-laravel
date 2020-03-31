@@ -2,6 +2,8 @@
 
 @section('body')
 <div class="d-flex flex-column border border-primary rounded">
+<?php
+?>
     @for($i = 0; $i < count($recettes); $i++)
         @if($i % 2 == 0)
         <div class="d-flex">

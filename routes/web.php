@@ -13,6 +13,7 @@
 
 Route::redirect('/', '/home');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@filtre')->name('home');
 
 Route::get('recette/edition', 'RecetteController@create')->name('recette.create');
 Route::get('recette/edition/{id}', 'RecetteController@edit')->name('recette.edit');
