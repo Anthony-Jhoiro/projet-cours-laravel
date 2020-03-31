@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Assets;
 use App\Categorie;
 use App\Http\Requests\RecetteRequest;
+use App\Mail\Contact;
 use App\Recette;
+use App\User;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -81,6 +84,7 @@ class RecetteController extends Controller
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');
+        if ($photoUrls = null) $photoUrls = [];
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
                 'url' => $photoUrl,
@@ -92,6 +96,9 @@ class RecetteController extends Controller
         $recette -> getIngredients () -> attach ($request -> ingredientIds);
 
         $recette -> getCategories () -> attach($request -> categories);
+
+        // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
+
 
         return self::index ();
     }

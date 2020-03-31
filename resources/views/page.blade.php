@@ -64,6 +64,7 @@
         </form>
     </div>
 </nav>
+
 @yield('aside')
 <div class="container mt-2" id="body">
     @yield('body')
