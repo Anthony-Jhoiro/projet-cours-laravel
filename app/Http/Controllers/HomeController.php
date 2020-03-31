@@ -5,6 +5,7 @@ use App\Recette;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -35,13 +36,16 @@ class HomeController extends Controller
         }
         foreach ($recettes as  $recette) {
             $recette->text = substr($recette->text, 0, HomeController::$nbCaractere)."...";
+
+            // TODO : Rework all of this
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
             $moisNb = (int) $date->format('m') - 1;
             $mois = HomeController::$lesMois[$moisNb]." ";
             $jour = $date->format("d")." ";
             $reste = $date->format('Y à H:i');
-            $recette->updated_at = $jour.$mois.$reste;
+            $recette->updated_att = $jour.$mois.$reste;
         }
+        if ($recettes == null) Log::debug ($recettes);
         return view('home', compact('recettes'));
     }
 }

@@ -7,6 +7,8 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
+
+    use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -14,8 +16,23 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/home');
+        $this->assertTrue (true);
+    }
 
+    public function testPublicRoutes()
+    {
+        $response = $this->get('/home');
         $response->assertStatus(200);
+
+        $response = $this->get('/login');
+        $response->assertStatus(200);
+    }
+
+    public function testProtectedByAuthRoutes()
+    {
+
+        // Note : 302 = redirection
+        $response = $this->get('/recette/edition');
+        $response->assertStatus (302); // redirection
     }
 }
