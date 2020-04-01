@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\Log;
 
 class PreferencesController extends Controller
 {
+    /**
+     * Au moment d'une visite d'un tilisateur sur la page d'une recette, mémorise
+     * les catégories de la recette en base afin d'y accéder en priorité
+     * @param PreferencesCategoriesRequest $request
+     */
     public function store(PreferencesCategoriesRequest $request) {
         $userId = Auth::user ()->id;
         $categorieId = $request->categorie_id;
 
-        Log::debug ("User : ".$userId." | categorie : ".$categorieId);
-
 
         $previousResult = Cats_Prefs::where (['user_id' => $userId, 'categorie_id' => $categorieId])->first();
-        Log::debug ("previousResults ".$previousResult);
 
         if ($previousResult == Null) {
             Cats_Prefs::create([
@@ -37,6 +39,10 @@ class PreferencesController extends Controller
         }
     }
 
+    /**
+     * Même foction qu'au dessus mais avec directement l'id de la categorie en parametre
+     * @param $categorieId
+     */
     public function storeForInjection($categorieId)
     {
         $userId = Auth ::user () -> id;

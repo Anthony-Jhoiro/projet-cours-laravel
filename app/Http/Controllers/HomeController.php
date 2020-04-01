@@ -14,13 +14,16 @@ class HomeController extends Controller
     public static $lesMois = [ "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
     public static $nbCaractere = 100;
 
+    protected $dateController;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DateController $dateController)
     {
+        $this->dateController = $dateController;
     }
 
     /**
@@ -30,26 +33,22 @@ class HomeController extends Controller
      */
     public function index( Request $request )
     {
-        // TODO : Rework !!!!
+        // Récupération de la liste des recettes
         if (isset( $_GET['s'] ) && !empty( $_GET['s'] )) {
-            $filtre = $_GET['s'];
             $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->limit(30)->get();
         } else {
             $recettes = Recette::limit(30)->get();
         }
 
+        // Pour chaque recette on formatte la date et on controlle la taille du texte
         foreach ($recettes as $recette) {
             $recette -> text = substr ( $recette -> text, 0, HomeController ::$nbCaractere ) . "...";
-
-            // TODO : Rework all of this
-            $date = DateTime ::createFromFormat ( 'Y-m-d H:i:s', $recette -> updated_at );
-            $moisNb = (int)$date -> format ( 'm' ) - 1;
-            $mois = HomeController ::$lesMois[$moisNb] . " ";
-            $jour = $date -> format ( "d" ) . " ";
-            $reste = $date -> format ( 'Y à H:i' );
-            $recette -> updated_att = $jour . $mois . $reste;
+            $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
         }
 
+        // Controlle du nombre de visite
+        // RULE : à chaque fois qu'un visiteur visite '/home', si sa dernière connexion
+        // remonte à plus de 30min, on l'ajoute à la base de donnée
         $clientIp = $request -> ip();
 
         $visitor = visitors::where('ip', $clientIp)->orderBy('updated_at', 'desc')->first();

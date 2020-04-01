@@ -9,6 +9,12 @@ use App\Ingredients;
 
 class RecetteEditionController extends Controller
 {
+    /**
+     * Créé la recette en base
+     * @param RecetteRequest $request
+     * @return mixed
+     * @throws \Exception
+     */
     public function store(RecetteRequest $request)
     {
         // Vérification de l'unicité du titre

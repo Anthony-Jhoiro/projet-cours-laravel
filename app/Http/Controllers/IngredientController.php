@@ -13,6 +13,11 @@ class IngredientController extends Controller
         return Ingredients::all();
     }
 
+    /**
+     * si l'ingrédient n'existe pas, le créer
+     * @param IngredientRequest $request
+     * @return Ingredients[]|\Illuminate\Database\Eloquent\Collection|void
+     */
     public function store(IngredientRequest $request) {
 
         // test if ingredient exist in database

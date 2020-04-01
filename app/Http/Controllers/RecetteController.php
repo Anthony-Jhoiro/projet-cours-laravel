@@ -18,11 +18,21 @@ class RecetteController extends Controller
 
     protected $preferencesController;
 
+    /**
+     * RecetteController constructor for deêndencies injection
+     * @param PreferencesController $preferencesController
+     */
     public function __construct(PreferencesController $preferencesController)
     {
         $this->preferencesController = $preferencesController;
     }
 
+    /**
+     * Charge les informations nécessaires à l'affichage d'une recette
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request, $id){
         /**
          * @var Recette $recette
@@ -64,6 +74,10 @@ class RecetteController extends Controller
         return view('recette', compact ('recette'));
     }
 
+    /**
+     * Charge la page d'édition d'une recette en mode création
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $parametres = [
@@ -77,6 +91,7 @@ class RecetteController extends Controller
         return view ('recetteEdit', $parametres);
     }
 
+
     public function update(Request $request, $n)
     {
         $recette = Recette::find($n);
@@ -86,6 +101,12 @@ class RecetteController extends Controller
         return view ('home');
     }
 
+    /**
+     * Charge la page d'édition d'une recette en mode edition
+     * @param Request $request
+     * @param $n
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit (Request $request, $n) {
         $recette = Recette::find($n);
 
