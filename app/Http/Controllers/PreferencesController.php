@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 class PreferencesController extends Controller
 {
     public function store(PreferencesCategoriesRequest $request) {
-//        Log::debug("show : ".$request->keys ());
         $userId = Auth::user ()->id;
         $categorieId = $request->categorie_id;
 
@@ -35,6 +34,30 @@ class PreferencesController extends Controller
             ]);
 
             Log::debug ("result : ".$previousResult);
+        }
+    }
+
+    public function storeForInjection($categorieId)
+    {
+        $userId = Auth ::user () -> id;
+
+        Log ::debug ( "User : " . $userId . " | categorie : " . $categorieId );
+
+
+        $previousResult = Cats_Prefs ::where ( [ 'user_id' => $userId, 'categorie_id' => $categorieId ] ) -> first ();
+
+        if ($previousResult == Null) {
+            Cats_Prefs ::create ( [
+                'user_id' => $userId,
+                'categorie_id' => $categorieId,
+                'derniere_visite' => now (),
+                'nb_visite' => 1
+            ] );
+        } else {
+            $previousResult -> update ( [
+                'derniere_visite' => now (),
+                'nb_visite' => $previousResult -> nb_visite + 1
+            ] );
         }
     }
 }
