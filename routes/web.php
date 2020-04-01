@@ -21,6 +21,9 @@ Route::middleware(['auth']) -> group(function () {
     Route::patch('recette/{id}', 'RecetteController@update')->name('recette.update');
     Route::get('recette/edition', 'RecetteController@create')->name('recette.create');
     Route::get('recette/edition/{id}', 'RecetteController@edit')->name('recette.edit');
+    Route::post('ingredients', 'IngredientController@store')->name('ingredients.store');
+
+    Route::post('preferences', 'PreferencesController@store')->name('preferences.store');
 });
 
 

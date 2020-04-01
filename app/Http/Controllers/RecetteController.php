@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Assets;
 use App\Categorie;
 use App\Http\Requests\RecetteRequest;
+use App\Ingredients;
 use App\Mail\Contact;
 use App\Recette;
 use App\User;
@@ -61,8 +62,10 @@ class RecetteController extends Controller
             'typeFormulaire' => 'POST',
             'recette' => new Recette(),
             'id' => -1,
-            'categories' => Categorie::all()
+            'categories' => Categorie::all(),
+            'ingredients' => Ingredients::all ()
         ];
+
         return view ('recetteEdit', $parametres);
     }
 
