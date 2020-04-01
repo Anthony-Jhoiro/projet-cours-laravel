@@ -1,27 +1,29 @@
 @extends ('page')
 
+@section('aside')
+    <aside class="p-3">
+        <h1>{{$totalVisitors}}</h1>
+        <h6>Visiteur{{($totalVisitors >1)? 's':''}}</h6>
+    </aside>
+@endsection
+
 @section('body')
-<div class="d-flex flex-column border border-primary rounded">
-<?php
-?>
-    @for($i = 0; $i < count($recettes); $i++)
-        @if($i % 2 == 0)
-        <div class="d-flex">
-        @endif
-        <div class="card mt-2 mb-2 ml-1 mr-1">
-            <div class="card-body">
-                <h5 class="card-title"> {{ $recettes[$i]->titre }}</h5>
-                <p class="card-text">{{ $recettes[$i]->text }}</p>
-                <a href="recette/{{$recettes[$i]->id}}" class="btn btn-primary">Essayer</a>
-            </div>
-            <div class="card-footer text-muted">
-                <h6 class="float-left"> par {{ $recettes[$i]->auteur }}</h6>
-                <h6 class="float-right">mis à jour le {{ $recettes[$i]->updated_att }}</h6>
+<div class="row rounded">
+    @foreach($recettes as $recette)
+        <div class="p-3 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"> {{ $recette->titre }}</h5>
+                    <p class="card-text">{{ $recette->text }}</p>
+                    <a href="recette/{{$recette->id}}" class="btn btn-primary">Essayer</a>
+                </div>
+                <div class="card-footer text-muted">
+                    <h6>Par {{ $recette->auteur }}</h6>
+                    <h6>Mis à jour le {{ $recette->updated_att }}</h6>
+                </div>
             </div>
         </div>
-        @if($i % 2 == 1)
-        </div>
-        @endif
-    @endfor
+
+    @endforeach
 </div>
 @endsection
