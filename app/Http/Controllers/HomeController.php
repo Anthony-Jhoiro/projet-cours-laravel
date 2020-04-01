@@ -33,10 +33,11 @@ class HomeController extends Controller
         // TODO : Rework !!!!
         if (isset( $_GET['s'] ) && !empty( $_GET['s'] )) {
             $filtre = $_GET['s'];
-            $recettes = DB ::select ( DB ::raw ( "SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id WHERE r.titre LIKE '?' LIMIT 30", [ $filtre ] ) );
+            $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->limit(30)->get();
         } else {
-            $recettes = DB ::select ( 'SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id LIMIT 30' );
+            $recettes = Recette::limit(30)->get();
         }
+
         foreach ($recettes as $recette) {
             $recette -> text = substr ( $recette -> text, 0, HomeController ::$nbCaractere ) . "...";
 

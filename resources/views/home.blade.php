@@ -1,7 +1,7 @@
 @extends ('page')
 
 @section('aside')
-    <aside class="p-3">
+    <aside class="p-3 float-left">
         <h1>{{$totalVisitors}}</h1>
         <h6>Visiteur{{($totalVisitors >1)? 's':''}}</h6>
     </aside>
