@@ -69,45 +69,7 @@ class RecetteController extends Controller
         return view ('recetteEdit', $parametres);
     }
 
-    public function store(RecetteRequest $request)
-    {
-        // Vérification de l'unicité du titre
-        $recette = Recette::where('titre', $request->titre)->get();
-        if (count($recette) != 0) throw new \Exception("Le nom de la recette est déjà pris");
-
-        // Création de la recette en base
-        $recette = new Recette([
-            'titre' => $request->input ('titre'),
-            'text' => $request->input ('text'),
-            'auteur' => Auth::user ()->id
-        ]);
-
-        Log::debug ($recette);
-        $recette -> save ();
-
-        // Ajout des assets
-        $photoUrls = $request->input('photoUrls');
-        if ($photoUrls === null) $photoUrls = [];
-        
-        foreach ($photoUrls as $photoUrl) {
-            Assets::create([
-                'url' => $photoUrl,
-                'recette_id' => $recette -> id
-            ]);
-        }
-
-        // Ajout des ingredients
-
-        Log::debug(["ingrédient" => $request -> ingredientIds]);
-        $recette -> getIngredients () -> attach ($request -> ingredientIds);
-
-        $recette -> getCategories () -> attach($request -> categories);
-
-        // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
-
-
-        return self::index ();
-    }
+    
 
     public function update(Request $request, $n)
     {
