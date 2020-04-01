@@ -28,11 +28,11 @@ class RecetteTest extends TestCase
     public function testUserCanCreateRecette() {
         $user = factory(User::class)->create();
         $req = factory (Recette::class)->make ();
-
+        
         $response = $this -> actingAs ($user) -> post ('/recette', $req->getAttributes ());
         $response -> assertSuccessful ();
 
-        $this ->assertDatabaseHas ('recettes', ['titre' => $req->titre, 'text' => $req->text]);
+        $response ->assertDatabaseHas ('recettes', ['titre' => $req->titre, 'text' => $req->text]);
     }
 
     public function testUserCanNotCreateRecetteIfNotLogin() {

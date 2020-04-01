@@ -84,7 +84,8 @@ class RecetteController extends Controller
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');
-        if ($photoUrls = null) $photoUrls = [];
+        if ($photoUrls === null) $photoUrls = [];
+        
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
                 'url' => $photoUrl,
@@ -93,6 +94,8 @@ class RecetteController extends Controller
         }
 
         // Ajout des ingredients
+
+        Log::debug(["ingrédient" => $request -> ingredientIds]);
         $recette -> getIngredients () -> attach ($request -> ingredientIds);
 
         $recette -> getCategories () -> attach($request -> categories);

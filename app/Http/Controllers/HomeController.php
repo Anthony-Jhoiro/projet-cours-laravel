@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if(isset($_GET['s']) && !empty($_GET['s'])){
-            $filtre = '%' . $_GET['s'] . '%';
+            $filtre = $_GET['s'];
             $recettes = DB::select(DB::raw("SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id WHERE r.titre LIKE '?' LIMIT 30", [ $filtre ]));
         }
         else {
