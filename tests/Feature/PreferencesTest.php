@@ -48,4 +48,8 @@ class PreferencesTest extends TestCase
 
         $this->assertDatabaseHas ('cats_prefs', ['user_id' => $user->id, 'categorie_id' => $categorie->id, 'nb_visite' => 2]);
     }
+
+    public function testUserPreferencesAreUpdatedWhenHeGoToAPage() {
+        // TODO : implement
+    }
 }

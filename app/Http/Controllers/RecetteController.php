@@ -2,34 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Assets;
 use App\Categorie;
-use App\Http\Requests\RecetteRequest;
+use App\Http\Requests\PreferencesCategoriesRequest;
 use App\Ingredients;
-use App\Mail\Contact;
 use App\Recette;
-use App\User;
-use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use DateTime;
+use phpDocumentor\Reflection\Types\Null_;
 
 class RecetteController extends Controller
 {
+
+    protected $preferencesController;
+
+    public function __construct(PreferencesController $preferencesController)
+    {
+        $this->preferencesController = $preferencesController;
+    }
+
     public function index(Request $request, $id){
         /**
          * @var Recette $recette
          */
-        // chargement de la recette
-        $recette = Recette::find($id);
-
-        // Sil recette n'existe pas on renvoie une erreure 404
-        if ($recette == NULL) abort (404);
-
+        // chargement de la recette, on renvoie une erreure 404 si elle n'est pas trouvée
+        $recette = Recette::findOrFail($id);
 
         // Convertion du markdown au html
         $parser = new \Parsedown();
@@ -49,8 +48,19 @@ class RecetteController extends Controller
         $recette->ingredients = $recette->getIngredients;
 
 
+        $recette->categories = $recette->getCategories;
+
+
         // chargements des assets de la recette
         $recette->assets = $recette->getAssets;
+
+        if (Auth::user () != NULL) {
+            Log::debug ($recette->categories);
+            foreach ($recette->categories as $category) {
+                Log::debug ($category);
+                $this->preferencesController->storeForInjection ( $category->id );
+            }
+        }
 
         // On retourne de la vue
         return view('recette', compact ('recette'));
@@ -68,8 +78,6 @@ class RecetteController extends Controller
 
         return view ('recetteEdit', $parametres);
     }
-
-    
 
     public function update(Request $request, $n)
     {
