@@ -15,7 +15,7 @@ $factory->define(\App\Recette::class, function (Faker $faker) {
         'text' => $faker->paragraph,
         'titre' =>$faker->text (255),
         'photoUrls' => $faker->sentences($faker->randomDigit),
-        'ingredientIds' => $faker->words($faker->randomDigit),
+        'ingredients' => $faker->words($faker->randomDigit),
         'categories' => $faker->words($faker->randomDigit)
 
     ];
