@@ -33,7 +33,8 @@ $(() => {
 
 
 
-    $('#ajouterIngredient').click(() => {
+    $('#ajouterIngredient').click((e) => {
+        e.preventDefault();
         let text = $('#ingredientValue').val();
 
         if (text.length > 0 && ingredientsListe.filter(v => v.libelle.toUpperCase() === text.toUpperCase()).length === 0) {

@@ -47,27 +47,30 @@
         </div>
 
         <section class="col-md-6">
-
-            <h3>Liste de courses :</h3>
+            <h3 class="d-inline-block">Liste de courses :</h3>
+            <div class="dropdown d-inline-block">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropIngredients" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    Les ingrédients
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropIngredients">
+                    <input type="text" id="ingredientValue" placeholder="ingredient">
+                    <button class="btn btn-success" id="ajouterIngredient">Ajouter</button>
+                    <ul id="selectIngredient">
+                    </ul>
+                </div>
+            </div>
             <ul class="list-group list-group-flush" id="listeIngredient">
             </ul>
         </section>
 
 
+
+
         <input class="btn btn-primary m-3" type="submit" value="Envoyer !">
     </form>
 
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropIngredients" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Les ingrédients
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropIngredients">
-            <input type="text" id="ingredientValue" placeholder="ingredient"><button class="btn btn-success" id="ajouterIngredient">Ajouter</button>
-            <ul id="selectIngredient">
-            </ul>
-        </div>
-    </div>
+
 
     <form action="{{ url('photo') }}" action="POST" id="formulaireImage" enctype="multipart/form-data">
         @csrf
