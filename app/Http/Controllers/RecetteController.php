@@ -55,9 +55,7 @@ class RecetteController extends Controller
         $recette->assets = $recette->getAssets;
 
         if (Auth::user () != NULL) {
-            Log::debug ($recette->categories);
             foreach ($recette->categories as $category) {
-                Log::debug ($category);
                 $this->preferencesController->storeForInjection ( $category->id );
             }
         }

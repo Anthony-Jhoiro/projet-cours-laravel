@@ -41,9 +41,6 @@ class PreferencesController extends Controller
     {
         $userId = Auth ::user () -> id;
 
-        Log ::debug ( "User : " . $userId . " | categorie : " . $categorieId );
-
-
         $previousResult = Cats_Prefs ::where ( [ 'user_id' => $userId, 'categorie_id' => $categorieId ] ) -> first ();
 
         if ($previousResult == Null) {

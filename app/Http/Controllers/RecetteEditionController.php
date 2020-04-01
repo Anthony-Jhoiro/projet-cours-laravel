@@ -22,13 +22,13 @@ class RecetteEditionController extends Controller
             'auteur' => Auth::user ()->id
         ]);
 
-        Log::debug ($recette);
+
         $recette -> save ();
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');
         if ($photoUrls === null) $photoUrls = [];
-        
+
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
                 'url' => $photoUrl,
@@ -37,7 +37,6 @@ class RecetteEditionController extends Controller
         }
 
         // Ajout des ingredients
-
         $recette -> getIngredients () -> attach ($request -> ingredients);
 
         $recette -> getCategories () -> attach($request -> categories);
