@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 
 use App\Recette;
 use App\Ingredients;
+use App\Assets;
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RecetteEditionController extends Controller
 {
@@ -62,6 +65,6 @@ class RecetteEditionController extends Controller
         // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
 
 
-        return $this->homeController->index();
+        return $this->homeController->index( $request );
     }
 }
