@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Log;
 
 class SocialController extends Controller
 {
+    /**
+     * Ajoute l'utilisateur courant aux "suiveurs" de l'utilisateur donné d ans la requete
+     * @param SocialRequest $request
+     * @return string
+     */
     public function follow(SocialRequest $request) {
         try {
             $currentUser = User::find(Auth::user ()->id);

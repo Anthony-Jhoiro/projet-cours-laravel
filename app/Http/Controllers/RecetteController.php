@@ -17,12 +17,24 @@ class RecetteController extends Controller
 {
 
     protected $preferencesController;
+    protected $dateController;
 
-    public function __construct(PreferencesController $preferencesController)
+    /**
+     * RecetteController constructor for deêndencies injection
+     * @param PreferencesController $preferencesController
+     */
+    public function __construct(PreferencesController $preferencesController, DateController $dateController)
     {
         $this->preferencesController = $preferencesController;
+        $this->dateController = $dateController;
     }
 
+    /**
+     * Charge les informations nécessaires à l'affichage d'une recette
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request, $id){
         /**
          * @var Recette $recette
@@ -35,12 +47,7 @@ class RecetteController extends Controller
         $recette->text =  $parser->text($recette->text);
 
         // mise en forme de la date
-        $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
-        $moisNb = (int) $date->format('m') - 1;
-        $mois = HomeController::$lesMois[$moisNb]." ";
-        $jour = $date->format("d")." ";
-        $reste = $date->format('Y à H:i');
-        $recette->formatDate = $jour.$mois.$reste;
+        $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
 
         $recette->auteurNom = $recette->author->name;
 
@@ -55,9 +62,7 @@ class RecetteController extends Controller
         $recette->assets = $recette->getAssets;
 
         if (Auth::user () != NULL) {
-            Log::debug ($recette->categories);
             foreach ($recette->categories as $category) {
-                Log::debug ($category);
                 $this->preferencesController->storeForInjection ( $category->id );
             }
         }
@@ -66,6 +71,10 @@ class RecetteController extends Controller
         return view('recette', compact ('recette'));
     }
 
+    /**
+     * Charge la page d'édition d'une recette en mode création
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $parametres = [
@@ -79,6 +88,7 @@ class RecetteController extends Controller
         return view ('recetteEdit', $parametres);
     }
 
+
     public function update(Request $request, $n)
     {
         $recette = Recette::find($n);
@@ -88,6 +98,12 @@ class RecetteController extends Controller
         return view ('home');
     }
 
+    /**
+     * Charge la page d'édition d'une recette en mode edition
+     * @param Request $request
+     * @param $n
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit (Request $request, $n) {
         $recette = Recette::find($n);
 

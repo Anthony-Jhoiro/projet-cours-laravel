@@ -1,23 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Recette;
+use App\visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use DateTime;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
-        public static $lesMois = [ "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-        public static $nbCaractere = 100;
+    protected $dateController;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DateController $dateController)
     {
+        $this->dateController = $dateController;
     }
 
     /**
@@ -25,27 +27,43 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index( Request $request )
     {
-        if(isset($_GET['s']) && !empty($_GET['s'])){
-            $filtre = $_GET['s'];
-            $recettes = DB::select(DB::raw("SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id WHERE r.titre LIKE '?' LIMIT 30", [ $filtre ]));
+        // Récupération de la liste des recettes
+        if (isset( $_GET['s'] ) && !empty( $_GET['s'] )) {
+            $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->limit(30)->get();
+        } else {
+            $recettes = Recette::limit(30)->get();
         }
-        else {
-            $recettes = DB::select('SELECT r.id, r.titre, r.auteur auteur_id, r.text, r.created_at, r.updated_at, u.name auteur FROM recettes r INNER JOIN users u ON r.auteur = u.id LIMIT 30');
-        }
-        foreach ($recettes as  $recette) {
-            $recette->text = substr($recette->text, 0, HomeController::$nbCaractere)."...";
 
-            // TODO : Rework all of this
-            $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
-            $moisNb = (int) $date->format('m') - 1;
-            $mois = HomeController::$lesMois[$moisNb]." ";
-            $jour = $date->format("d")." ";
-            $reste = $date->format('Y à H:i');
-            $recette->updated_att = $jour.$mois.$reste;
+        // Pour chaque recette on formatte la date et on controlle la taille du texte
+        foreach ($recettes as $recette) {
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
+            $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
         }
-        if ($recettes == null) Log::debug ($recettes);
-        return view('home', compact('recettes'));
+
+        // Controlle du nombre de visite
+        // RULE : à chaque fois qu'un visiteur visite '/home', si sa dernière connexion
+        // remonte à plus de 30min, on l'ajoute à la base de donnée
+        $clientIp = $request -> ip();
+
+        $visitor = visitors::where('ip', $clientIp)->orderBy('updated_at', 'desc')->first();
+        if ($visitor != NULL) {
+            // le visiteur est déjà venu
+            if ($visitor->updated_at->diffInMinutes(now ()) > 30) {
+                visitors::create(['ip' => $clientIp]);
+            } else {
+                $visitor->updated_at = now ();
+                $visitor->save();
+            }
+        } else {
+            // le visiteur est nouveau
+            visitors::create(['ip' => $clientIp]);
+        }
+
+        return view ( 'home', [
+            'recettes' => $recettes,
+            'totalVisitors' => Visitors::count()
+        ]);
     }
 }

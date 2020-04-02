@@ -12,8 +12,6 @@ const mix = require('laravel-mix');
  */
 
 mix .js('resources/js/app.js', 'public/js')
-    .js('node_modules/bootstrap-select/dist/js/bootstrap.min.js')
-    .sass('resources/sass/app.scss', 'public/css')
     .copy('node_modules/simplemde/dist/simplemde.min.js', 'public/js/ressources/simplemde.min.js')
     .copy('node_modules/simplemde/dist/simplemde.min.css', 'public/css/ressources/simplemde.min.css')
     .js('node_modules/bootstrap/dist/js/bootstrap.min.js', 'public/js/ressources')

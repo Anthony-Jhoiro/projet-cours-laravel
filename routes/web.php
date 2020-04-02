@@ -24,6 +24,8 @@ Route::middleware(['auth']) -> group(function () {
     Route::post('ingredients', 'IngredientController@store')->name('ingredients.store');
 
     Route::post('preferences', 'PreferencesController@store')->name('preferences.store');
+
+    Route::get('profile', 'UserController@index')->name('profile.edit');
 });
 
 

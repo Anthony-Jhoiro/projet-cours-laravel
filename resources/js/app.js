@@ -16,6 +16,8 @@ try {
     console.error(e);
 }
 
+require('@fortawesome/fontawesome-free/js/all.js');
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

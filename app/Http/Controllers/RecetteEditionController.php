@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RecetteRequest;
 use Illuminate\Http\Request;
 
 use App\Recette;
 use App\Ingredients;
-use App\Assets;
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class RecetteEditionController extends Controller
 {
@@ -18,13 +16,20 @@ class RecetteEditionController extends Controller
     public function __construct(HomeController $homeController){
         $this->homeController = $homeController;
     }
-    public function store(Request $request)
+    
+    /**
+     * Créé la recette en base
+     * @param RecetteRequest $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function store(RecetteRequest $request)
     {
-        // Vérification de l'unicité du titre
+        // Verification de l'unicité du titre
         $recette = Recette::where('titre', $request->titre)->get();
         if (count($recette) != 0) throw new \Exception("Le nom de la recette est déjà pris");
 
-        // Création de la recette en base
+        // Creation de la recette en base
         $recette = new Recette([
             'titre' => $request->input ('titre'),
             'text' => $request->input ('text'),
@@ -32,12 +37,13 @@ class RecetteEditionController extends Controller
         ]);
 
         Log::debug (["recette" => $recette]);
+
         $recette -> save ();
 
         // Ajout des assets
         $photoUrls = $request->input('photoUrls');
         if ($photoUrls === null) $photoUrls = [];
-        
+
         foreach ($photoUrls as $photoUrl) {
             Assets::create([
                 'url' => $photoUrl,

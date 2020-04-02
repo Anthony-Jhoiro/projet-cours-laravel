@@ -42,7 +42,7 @@
                     <a class="nav-link" href="/recette/edition">Nouvelle recette</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mon compte</a>
+                    <a class="nav-link" href="/profile">Mon compte</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}" id="deconnexionButton">Déconnexion</a>
@@ -106,8 +106,8 @@
 <script>
 
     $('#submit').click(() => {
-        let search = $('#recherche')[0].value; 
-        if(search != ""){       
+        let search = $('#recherche')[0].value;
+        if(search != ""){
             window.location.href = "/home?s=" + search + "&l=1";
         }
     })
