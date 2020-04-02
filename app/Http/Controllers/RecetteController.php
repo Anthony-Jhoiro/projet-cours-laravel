@@ -141,4 +141,15 @@ class RecetteController extends Controller
 
         // Modifier les données en base
     }
+
+    public function delete(Request $request, $id) {
+        $recette = Recette::find($id);
+
+        if ($recette->auteur == Auth::user ()->id) {
+            $recette->forceDelete();
+        } else {
+            // TODO : Renvoyer une erreur
+        }
+
+    }
 }

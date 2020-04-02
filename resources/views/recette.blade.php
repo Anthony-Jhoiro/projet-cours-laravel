@@ -1,6 +1,10 @@
 @extends ('page')
 
 @section('js_head')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('js_head')
 
 
     <meta name="csrf-token" content="{{ csrf_token() }}">

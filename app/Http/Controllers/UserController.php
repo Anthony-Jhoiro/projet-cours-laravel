@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Recette;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,4 +43,5 @@ class UserController extends Controller
 
         return view ('profile', $parameters);
     }
+
 }
