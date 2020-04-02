@@ -25,5 +25,11 @@ class SocialController extends Controller
         }
 
     }
+
+    public function unFollow(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $user->getFollowers()->detach(Auth::user ()->id);
+
+    }
 }
 
