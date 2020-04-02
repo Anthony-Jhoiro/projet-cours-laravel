@@ -18,7 +18,7 @@ class SocialController extends Controller
     public function follow(SocialRequest $request) {
         try {
             $currentUser = User::find(Auth::user ()->id);
-            $currentUser->getFollowers() -> attach ($request -> id);
+            $currentUser->getInfluencers() -> attach ($request -> id);
             return "Vous êtes abonné !";
         } catch (\Exception $e) {
             return $e->getMessage ();

@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     <h6>Par {{ $recette->auteur }}</h6>
-                    <h6>Mis à jour le {{ $recette->updated_att }}</h6>
+                    <h6>Mis à jour le {{ $recette->dateFormat }}</h6>
                 </div>
             </div>
         </div>

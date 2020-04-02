@@ -41,10 +41,10 @@ class User extends Authenticatable
 
 
     public function getFollowers() {
-        return $this->belongsToMany('App\User', 'abonner', 'suivi', 'abonne');
+        return $this->belongsToMany('App\User', 'abonner', 'abonne', 'suivi');
     }
 
     public function getInfluencers() {
-        return $this->belongsToMany('App\User', 'abonner', 'abonne', 'suivi');
+        return $this->belongsToMany('App\User', 'abonner', 'suivi', 'abonne');
     }
 }

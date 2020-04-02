@@ -28,9 +28,22 @@ class SocialTest extends TestCase
         $user1 = factory (User::class)->create ();
         $user2 = factory (User::class)->create ();
 
-
         $response= $this->actingAs ($user2) ->post ('/social', ['id' => $user1->id]);
 
         $this->assertDatabaseHas ('abonner', ['abonne' => $user1->id, 'suivi' =>$user2->id]);
+    }
+
+    public function testUserCanUnFollowOtherUser()
+    {
+
+        $user1 = factory (User::class)->create ();
+        $user2 = factory (User::class)->create ();
+
+        $response= $this->actingAs ($user2) ->post ('/social', ['id' => $user1->id]);
+        $response->assertSuccessful ();
+        $response= $this->actingAs ($user2) ->delete ('/social/'.$user1->id);
+        $response->assertSuccessful ();
+
+        $this->assertDatabaseMissing ('abonner', ['abonne' => $user1->id, 'suivi' =>$user2->id]);
     }
 }

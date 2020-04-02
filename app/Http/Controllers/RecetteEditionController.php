@@ -19,7 +19,7 @@ class RecetteEditionController extends Controller
     public function __construct(HomeController $homeController){
         $this->homeController = $homeController;
     }
-    
+
     /**
      * Créé la recette en base
      * @param RecetteRequest $request
@@ -39,8 +39,6 @@ class RecetteEditionController extends Controller
             'auteur' => Auth::user ()->id
         ]);
 
-        Log::debug (["recette" => $recette]);
-
         $recette -> save ();
 
         // Ajout des assets
@@ -53,10 +51,6 @@ class RecetteEditionController extends Controller
                 'recette_id' => $recette -> id
             ]);
         }
-
-        // Ajout des ingredients
-        Log::debug (["ingredients" => $request -> ingredients]);
-        Log::debug (["categories" => $request -> categories]);
 
         $recette -> getIngredients () -> attach ($request -> ingredients);
 
