@@ -46,3 +46,7 @@ Route::get('/callback', 'SocialAuthGoogleController@callback');
 Route::get('/ingredients', 'IngredientController@get');
 
 Route::post('/social', 'SocialController@follow');
+
+
+
+Route::post('/note', 'NotesController@store');
