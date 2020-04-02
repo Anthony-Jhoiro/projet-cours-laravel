@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
-    public static $lesMois = [ "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
-    public static $nbCaractere = 100;
-
     protected $dateController;
 
     /**
@@ -41,7 +38,7 @@ class HomeController extends Controller
 
         // Pour chaque recette on formatte la date et on controlle la taille du texte
         foreach ($recettes as $recette) {
-            $recette -> text = substr ( $recette -> text, 0, HomeController ::$nbCaractere ) . "...";
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
             $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
         }
 
