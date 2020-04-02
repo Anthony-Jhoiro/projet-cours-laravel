@@ -6,7 +6,6 @@ use App\Recette;
 use App\visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use DateTime;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
