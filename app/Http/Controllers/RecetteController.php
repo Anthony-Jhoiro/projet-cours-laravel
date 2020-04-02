@@ -17,14 +17,16 @@ class RecetteController extends Controller
 {
 
     protected $preferencesController;
+    protected $dateController;
 
     /**
      * RecetteController constructor for deêndencies injection
      * @param PreferencesController $preferencesController
      */
-    public function __construct(PreferencesController $preferencesController)
+    public function __construct(PreferencesController $preferencesController, DateController $dateController)
     {
         $this->preferencesController = $preferencesController;
+        $this->dateController = $dateController;
     }
 
     /**
@@ -45,12 +47,7 @@ class RecetteController extends Controller
         $recette->text =  $parser->text($recette->text);
 
         // mise en forme de la date
-        $date = DateTime::createFromFormat('Y-m-d H:i:s', $recette->updated_at);
-        $moisNb = (int) $date->format('m') - 1;
-        $mois = HomeController::$lesMois[$moisNb]." ";
-        $jour = $date->format("d")." ";
-        $reste = $date->format('Y à H:i');
-        $recette->formatDate = $jour.$mois.$reste;
+        $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
 
         $recette->auteurNom = $recette->author->name;
 
