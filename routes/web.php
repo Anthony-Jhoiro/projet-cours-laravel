@@ -30,6 +30,9 @@ Route::middleware(['auth']) -> group(function () {
 
     Route::delete('/social/{id}', 'SocialController@unFollow')->name('social.unFollow');
     Route::post('/social', 'SocialController@follow')->name('social.follow');
+
+    Route::post('/note', 'NotesController@store');
+    Route::post('photo', 'PhotoController@store');
 });
 
 
@@ -41,7 +44,6 @@ Route::post('/login', 'LoginController@loger');
 
 Route::get('/wow', 'RecetteController@store');
 
-Route::post('photo', 'PhotoController@store');
 
 Auth::routes();
 
@@ -50,4 +52,5 @@ Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Route::get('/ingredients', 'IngredientController@get');
+
 

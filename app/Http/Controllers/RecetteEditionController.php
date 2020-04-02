@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class RecetteEditionController extends Controller
 {
+    protected $homeController;
+
+    public function __construct(HomeController $homeController){
+        $this->homeController = $homeController;
+    }
+    
     /**
      * Créé la recette en base
      * @param RecetteRequest $request
@@ -30,6 +36,7 @@ class RecetteEditionController extends Controller
             'auteur' => Auth::user ()->id
         ]);
 
+        Log::debug (["recette" => $recette]);
 
         $recette -> save ();
 
@@ -45,6 +52,9 @@ class RecetteEditionController extends Controller
         }
 
         // Ajout des ingredients
+        Log::debug (["ingredients" => $request -> ingredients]);
+        Log::debug (["categories" => $request -> categories]);
+
         $recette -> getIngredients () -> attach ($request -> ingredients);
 
         $recette -> getCategories () -> attach($request -> categories);
@@ -52,6 +62,6 @@ class RecetteEditionController extends Controller
         // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
 
 
-        return self::index ();
+        return $this->homeController->index();
     }
 }

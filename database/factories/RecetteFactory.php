@@ -17,13 +17,14 @@ $factory->define(\App\Recette::class, function (Faker $faker) {
     for ($i = 0; $i < $nb; $i++) {
         $arrNb[$i] = $faker->randomDigit;
     }
+
     
     return [
         'text' => $faker->paragraph,
         'titre' =>$faker->text (255),
         'photoUrls' => $faker->sentences($faker->randomDigit),
-        'ingredients' => $arrNb,
-        'categories' => $arrNb
+        'ingredients' => $faker->words($faker->randomDigit),
+        'categories' => $faker->words($faker->randomDigit)
 
     ];
 });
