@@ -33,6 +33,8 @@ Route::middleware(['auth']) -> group(function () {
 
     Route::post('/note', 'NotesController@store');
     Route::post('photo', 'PhotoController@store');
+    Route::get('contact', 'ContactController@index');
+    Route::post('contact', 'ContactController@store');
 });
 
 
@@ -52,5 +54,4 @@ Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Route::get('/ingredients', 'IngredientController@get');
-
 

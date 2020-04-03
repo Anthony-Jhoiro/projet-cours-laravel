@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NouvelleRecette;
 use App\Http\Requests\RecetteRequest;
 use Illuminate\Http\Request;
 
@@ -57,6 +58,8 @@ class RecetteEditionController extends Controller
         $recette -> getCategories () -> attach($request -> categories);
 
         // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
+
+        event (new NouvelleRecette($recette));
 
 
         return $this->homeController->index( $request );
