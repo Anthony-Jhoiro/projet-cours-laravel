@@ -19,7 +19,7 @@ class RecetteEditionController extends Controller
     public function __construct(HomeController $homeController){
         $this->homeController = $homeController;
     }
-
+    
     /**
      * Créé la recette en base
      * @param RecetteRequest $request
@@ -52,6 +52,10 @@ class RecetteEditionController extends Controller
             ]);
         }
 
+        // Ajout des ingredients
+        Log::debug (["ingredients" => $request -> ingredients]);
+        Log::debug (["categories" => $request -> categories]);
+
         $recette -> getIngredients () -> attach ($request -> ingredients);
 
         $recette -> getCategories () -> attach($request -> categories);
@@ -59,6 +63,6 @@ class RecetteEditionController extends Controller
         // TODO : Envoie d'un mail à tout les utilisateurs qui suivent l'auteur
 
 
-        return $this->homeController->index( $request );
+        return $this->homeController->index( $request  );
     }
 }
