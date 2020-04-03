@@ -66,9 +66,9 @@
 </nav>
 
 @yield('aside')
-<div class="container mt-2" id="body">
+<main class="container mt-2" id="body">
     @yield('body')
-</div>
+</main>
 
 <div class="modal fade " id="modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
