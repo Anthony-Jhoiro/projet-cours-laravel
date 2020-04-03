@@ -54,8 +54,6 @@ class RecetteEditionController extends Controller
         }
 
         // Ajout des ingredients
-        Log::debug (["ingredients" => $request -> ingredients]);
-        Log::debug (["categories" => $request -> categories]);
 
         $recette -> getIngredients () -> attach ($request -> ingredients);
 

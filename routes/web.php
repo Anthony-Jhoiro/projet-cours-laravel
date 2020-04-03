@@ -31,7 +31,7 @@ Route::middleware(['auth']) -> group(function () {
     Route::delete('/social/{id}', 'SocialController@unFollow')->name('social.unFollow');
     Route::post('/social', 'SocialController@follow')->name('social.follow');
 
-    Route::post('/note', 'NotesController@store');
+    Route::post('/note', 'FeedbackController@storeNote');
     Route::post('photo', 'PhotoController@store');
     Route::get('contact', 'ContactController@index');
     Route::post('contact', 'ContactController@store');
