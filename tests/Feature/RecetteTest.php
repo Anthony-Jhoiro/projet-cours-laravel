@@ -9,6 +9,7 @@ use App\Categorie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Database\Factory\Faker;
 use Tests\TestCase;
 
 class RecetteTest extends TestCase
@@ -30,13 +31,15 @@ class RecetteTest extends TestCase
 
     // TODO : implement
    public function testUserCanCreateRecette() {
+
+
        $user = factory(User::class)->create();
        $req = factory (Recette::class)->make ();
 
        // création des ingrédients test
+       $nbIngredients = 5;
        $newIngredients = [];
-       $ingredientsLibelle = $req->ingredients;
-       foreach ($ingredientsLibelle as $ingredientLibelle) {
+       for ($i = 0; $i < $nbIngredients; $i++) {
            $ingredient = factory(Ingredients::class)->create();
            $id = $ingredient->id;
            array_push($newIngredients, $id);
@@ -44,9 +47,10 @@ class RecetteTest extends TestCase
        $req->ingredients = $newIngredients;
 
        // création des catégories test
+       $nbCats = 2;
        $newCategories = [];
        $categoriesLibelle = $req->categories;
-       foreach ($categoriesLibelle as $categorieLibelle) {
+       for ($i = 0; $i < $nbCats; $i++) {
            $categorie = factory(Categorie::class)->create();
            $id = $categorie->id;
            array_push($newCategories, $id);
