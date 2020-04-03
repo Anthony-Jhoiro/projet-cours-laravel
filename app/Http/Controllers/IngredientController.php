@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IngredientRequest;
 use App\Ingredients;
+use App\Recette;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -32,5 +33,11 @@ class IngredientController extends Controller
 
         return self::get ();
 
+    }
+
+    public function getByRecette(Request $request, $id) {
+        $recette = Recette::findOrFail($id);
+
+        return $recette->getIngredients;
     }
 }

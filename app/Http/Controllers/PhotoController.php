@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Assets;
 use App\Http\Requests\ImagesRequest;
+use App\Recette;
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -18,5 +19,12 @@ class PhotoController extends Controller
         $path = $request->image->store(config('images.path'), 'public');
 
         return $path;
+    }
+
+    public function getByRecette(Request $request, $id) {
+        $recette = Recette::findOrFail($id);
+
+        return $recette->getAssets;
+
     }
 }

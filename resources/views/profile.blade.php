@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <h5 class="card-title"> {{ $recette->titre }}</h5>
                             <p class="card-text">{{ $recette->parsedText }}</p>
-                            <a href="recette/{{$recette->id}}" class="btn btn-primary btn-edit-recette" >Éditer</a>
+                            <a href="recette/edition/{{$recette->id}}" class="btn btn-primary btn-edit-recette" >Éditer</a>
                             <button class="btn btn-danger btn-delete-recette" id="delete_{{ $recette->id }}">Supprimer</button>
                         </div>
                         <div class="card-footer text-muted">
