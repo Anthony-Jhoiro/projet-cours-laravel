@@ -21,7 +21,7 @@ use phpDocumentor\Reflection\Types\Null_;
 
 class RecetteController extends Controller
 {
-
+    const RecetteAffichageMax = 10;
     protected $preferencesController;
     protected $dateController;
 
