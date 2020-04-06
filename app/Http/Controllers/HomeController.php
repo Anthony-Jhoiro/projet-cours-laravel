@@ -29,11 +29,14 @@ class HomeController extends Controller
      */
     public function index( Request $request )
     {
+        if (isset($_GET['offset'])) $offset = $_GET['offset'];
+        else $offset = 0;
+        $size = 10;
         // Récupération de la liste des recettes
         if (isset( $_GET['s'] ) && !empty( $_GET['s'] )) {
-            $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->limit(30)->get();
+            $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->get();
         } else {
-            $recettes = Recette::limit(30)->get();
+            $recettes = Recette::all();
         }
 
         // Pour chaque recette on formatte la date et on controlle la taille du texte

@@ -3,14 +3,46 @@ var simplemde = new SimpleMDE();
 
 $(() => {
 
-    $.ajaxSetup({
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-    });
-
     let ingredientsListe = [];
     let ingredientsListeForRecette = [];
     let photoUrls = [];
-    let imageContainerSize = 1;
+    let imageContainerSize = 0;
+
+
+    let formulaire = $('#formulairePrincipal');
+    let id = $('#recetteId').val();
+    let method = formulaire.attr('method')
+
+    if (method != 'POST') {
+        $.ajax({
+            method: 'get',
+            url: '/assets/recette/'+id
+        }).done(data => {
+            data.forEach(e => {
+                photoUrls.push(data);
+                $('.carousel-item.active ').removeClass('active');
+                $('#imagesCarousel').append('<div class="carousel-item active">\n' +
+                    '                <img class="d-block w-100 img-carrous" src=' + e.url + '"/" alt="slide">\n' +
+                    '            </div>');
+                $('#indicators-container').append('<li data-target="#carouselImage" data-slide-to="' + imageContainerSize + '"></li>');
+            })
+        });
+
+        $.ajax({
+            method: 'get',
+            url: '/ingredients/recette/'+id
+        }).done(data => {
+            console.log(data)
+            data.forEach(e => {
+                ingredientsListeForRecette.push({ libelle: e.libelle, id: e.libelle });
+                $('#listeIngredient').append(" <li class=\"list-group-item p-1\">" + e.libelle + "</li>");
+            });
+        });
+    }
+
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
 
     let addEventOnDropDownItems = () => {
 
@@ -59,11 +91,6 @@ $(() => {
         }
     });
 
-
-
-
-
-
     $('#file').change((e) => {
         // e.preventDefault();
         // let that = e.currentTarget;
@@ -95,7 +122,7 @@ $(() => {
     });
 
 
-    $('#formulairePrincipal').submit((e) => {
+    formulaire.submit((e) => {
         e.preventDefault();
         const titre = $('#titre').val();
         const text = $('#text').val();
@@ -108,17 +135,19 @@ $(() => {
 
 
         $.ajax({
-            method: 'post',
-            url: '/recette',
+            method: formulaire.attr('method'),
+            url: (method === 'PATCH')? '/recette/'+id : '/recette',
             data: {
                 titre: titre,
                 text: text,
                 photoUrls: photoUrls,
-                categories: categories
+                categories: categories,
+                ingredients: ingredientsListeForRecette.map(e => e.id)
             },
         })
             .done((data) => {
                 console.log(data);
+                window.location('/home');
             })
             .fail((data) => {
                 console.log(data.responseText.message);

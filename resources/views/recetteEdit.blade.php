@@ -11,11 +11,13 @@
 @section('body')
     <p id="errorText" class="text-danger"></p>
 
-    <form id="formulairePrincipal"
-          action="{{  ($id == -1)? route('recette.store') : route('recette.update', ['id' => $id]) }}" method="POST">
-        @if($typeFormulaire == "PATCH")
-            @method('patch')
+    <form id="formulairePrincipal" @if($id == -1) action="{{ route('recette.store') }}" method="POST" @else
+    action="{{ route('recette.update', ['id' => $id]) }}" method="PATCH" @endif>
+        @if($id != -1)
+            <input type="text" disabled hidden value="{{$id}}" id="recetteId">
         @endif
+
+
 
         @csrf
 
@@ -35,9 +37,11 @@
         <div class="d-flex flex-row mb-2 flex-wrap">
             @foreach($categories as $key => $value)
                 <div class="p-2">
-                    <label for="chkCat_{{$value->id}}" class="checklist-element">
+                    <label for="chkCat_{{ $value->id }}" class="checklist-element">
                         <input class="d-none categorie-checkbox" type="checkbox" name="chkCat_{{$value->id}}"
-                               id="chkCat_{{$value->id}}">
+                               id="chkCat_{{$value->id}}"
+                               @if(in_array ($value->id, $categoriesSelectionnes)) checked @endif
+                        >
                         <span class="badge badge-pill badge-light checkbox-label">
                         {{$value->libelle}}
                     </span>
@@ -49,7 +53,8 @@
         <section class="col-md-6">
             <h3 class="d-inline-block">Liste de courses :</h3>
             <div class="dropdown d-inline-block">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropIngredients" data-toggle="dropdown"
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropIngredients"
+                        data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     Les ingrédients
                 </button>
@@ -63,9 +68,6 @@
             <ul class="list-group list-group-flush" id="listeIngredient">
             </ul>
         </section>
-
-
-
 
         <input class="btn btn-primary m-3" type="submit" value="Envoyer !">
     </form>
@@ -90,10 +92,12 @@
             <li data-target="#carouselImage" data-slide-to="0" class="active"></li>
         </ol>
         <div class="carousel-inner" id="imagesCarousel">
-            <div class="carousel-item active ">
-                <img src="/uploads/g4ASLfidi9mUs6Cu1efm2Rq4fne05e4rnTv9kvQD.jpeg" class="img-carrous d-block w-100"
-                     alt="...">
-            </div>
+            @foreach($assets as $asset)
+                <div class="carousel-item asset-item ">
+                    <img src="/{{ $asset->url }}" class="img-carrous d-block w-100" alt="...">
+                </div>
+            @endforeach
+
         </div>
         <a class="carousel-control-prev" href="#carouselImage" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

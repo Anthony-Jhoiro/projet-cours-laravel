@@ -11,6 +11,8 @@ class Contact extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $contact;
+
     /**
      * Create a new message instance.
      *
@@ -28,6 +30,6 @@ class Contact extends Mailable
      */
     public function build()
     {
-        return $this->from('anthony@anthonyquere.fr')->view('emails.contact');
+        return $this->from('noreply@cassrollton.fr')->view('emails.contact');
     }
 }
