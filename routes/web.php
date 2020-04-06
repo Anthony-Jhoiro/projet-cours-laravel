@@ -40,6 +40,8 @@ Route::middleware(['auth']) -> group(function () {
     Route::post('/social', 'SocialController@follow')->name('social.follow');
 
     Route::post('/note', 'FeedbackController@storeNote');
+    Route::get('/myNote/{id}', 'FeedbackController@indexMyNote');
+
     Route::post('photo', 'PhotoController@store');
     Route::get('contact', 'ContactController@index');
     Route::post('contact', 'ContactController@store');
@@ -47,6 +49,8 @@ Route::middleware(['auth']) -> group(function () {
     Route::get('assets/recette/{id}', 'PhotoController@getByRecette')->name('assets.by.recette');
     Route::get('ingredients/recette/{id}', 'IngredientController@getByRecette')->name('assets.by.recette');
 });
+
+Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
 
 
 Route::get('recette/{id}', 'Recette\RecetteController@index');

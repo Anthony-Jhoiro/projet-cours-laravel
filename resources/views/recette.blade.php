@@ -59,6 +59,24 @@
                     <h3>Par {{ $recette->auteurNom }} @auth <button class="btn btn-info" id="follow_btn" auteur="{{$recette->auteur}}">Suivre !</button> @endauth</h3>
                     <h6> Mis à jour le {{ $recette->formatDate }}</h6>
                 </div>
+                @if(Auth::check())
+                    <div class="row mt-3">
+                        <h4 class="col-md-7">Votre note :</h4>
+                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="1"></i>
+                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="2"></i>
+                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="3"></i>
+                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="4"></i>
+                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="5"></i>
+                    </div>
+                @endif
+                <div class="row mb-2">
+                    <h4 class="col-md-7">note des utilisateurs :</h4>
+                    <i class="fas fa-mug-hot text-secondary mr-1 moy" value="1"></i>
+                    <i class="fas fa-mug-hot text-secondary mr-1 moy" value="2"></i>
+                    <i class="fas fa-mug-hot text-secondary mr-1 moy" value="3"></i>
+                    <i class="fas fa-mug-hot text-secondary mr-1 moy" value="4"></i>
+                    <i class="fas fa-mug-hot text-secondary mr-1 moy" value="5"></i>
+                </div>
                 <div>
                     <h4>Ingredients : </h4>
                     <ul class="list-group list-group-flush">
@@ -107,6 +125,71 @@
                     console.log(data);
                 })
 
+            });
+            recette_id = window.location.href.split('/').pop();
+
+            // notation :
+            $('.mn').click(e => {
+                note = e.currentTarget.id;
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/note',
+                    data: {note: note, recette_id: recette_id}
+                })
+                .done(data => {
+                    for(let i = 0; i < 5; i++){
+                        currentTasse = $('.mn')[i];
+                        if(i < data){
+                            currentTasse.classList.add('text-primary');
+                            currentTasse.classList.remove('text-secondary');
+                        } else{
+                            currentTasse.classList.add('text-secondary');
+                            currentTasse.classList.remove('text-primary');
+                        }
+                    }
+                })
+                
+            });
+
+            // note moyenne :
+
+            $.ajax({
+                method: 'GET',
+                url: '/noteMoyenne/' + recette_id,
+            })
+            .done(data => {                
+                for(let i = 0; i < 5; i++){
+                    currentTasse = $('.moy')[i];
+                    if(i < data){
+                        currentTasse.classList.add('text-primary');
+                        currentTasse.classList.remove('text-secondary');
+                    } else{
+                        currentTasse.classList.add('text-secondary');
+                        currentTasse.classList.remove('text-primary');
+                    }
+                }
+            });
+
+            // note user :
+
+            $.ajax({
+                method: 'GET',
+                url: '/myNote/' + recette_id,
+            })
+            .done(data => {    
+                console.log(data);
+                            
+                for(let i = 0; i < 5; i++){
+                    currentTasse = $('.mn')[i];
+                    if(i < data){
+                        currentTasse.classList.add('text-primary');
+                        currentTasse.classList.remove('text-secondary');
+                    } else{
+                        currentTasse.classList.add('text-secondary');
+                        currentTasse.classList.remove('text-primary');
+                    }
+                }
             });
         });
 
