@@ -66,16 +66,19 @@ class HomeController extends Controller
         foreach ($recettes as $recette) {
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
             $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur)->name;
         }
 
         foreach ($recettesSuggerees as $recette) {
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
             $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur)->name;
         }
 
         foreach ($recettesAbonnements as $recette) {
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
             $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur )->name;
         }
 
         // Controlle du nombre de visite

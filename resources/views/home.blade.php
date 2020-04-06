@@ -20,7 +20,7 @@
                             <a href="recette/{{$recette->id}}" class="btn btn-primary">Essayer</a>
                         </div>
                         <div class="card-footer text-muted">
-                            <h6>Par {{ $recette->auteur }}</h6>
+                            <h6>Par {{ $recette->auteurNom }}</h6>
                             <h6>Mis à jour le {{ $recette->dateFormat }}</h6>
                         </div>
                     </article>
@@ -42,7 +42,7 @@
                             <a href="recette/{{$recette->id}}" class="btn btn-primary">Essayer</a>
                         </div>
                         <div class="card-footer text-muted">
-                            <h6>Par {{ $recette->auteur }}</h6>
+                            <h6>Par {{ $recette->auteurNom }}</h6>
                             <h6>Mis à jour le {{ $recette->dateFormat }}</h6>
                         </div>
                     </article>
@@ -63,7 +63,7 @@
                         <a href="recette/{{$recette->id}}" class="btn btn-primary">Essayer</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <h6>Par {{ $recette->auteur }}</h6>
+                        <h6>Par {{ $recette->auteurNom }}</h6>
                         <h6>Mis à jour le {{ $recette->dateFormat }}</h6>
                     </div>
                 </article>
