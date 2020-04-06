@@ -39,6 +39,10 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    public function getCategoriesPreferees() {
+        return $this->belongsToMany ('App\Categorie', 'cats_prefs', 'user_id', 'categorie_id');
+    }
+
 
     public function getFollowers() {
         return $this->belongsToMany('App\User', 'abonner', 'abonne', 'suivi');
