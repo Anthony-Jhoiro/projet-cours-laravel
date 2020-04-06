@@ -10,6 +10,8 @@ use App\Recette;
 use App\User;
 use App\Feedback;
 
+use Illuminate\Support\Facades\Log;
+
 class feedbacksTest extends TestCase
 {
 
@@ -21,13 +23,23 @@ class feedbacksTest extends TestCase
      */
     public function testPutMarkOnRecetteIfLogin()
     {
-        $user = factory(User::class)->make();
-        $recette = factory (Recette::class)->make ();
+        $user = factory(User::class)->create();
+        $auteur = factory(User::class)->create();
+        $recette = factory (Recette::class);
 
-        $feedback = factory(Feedback::class)->make();
+        $testRecette = new Recette([
+            "titre" => $recette->titre,
+            "text" => $recette->text,
+            "auteur" => $auteur->id,
+            "created_at" => date('Y-m-d H:i:s'),
+            "updated_at" => date('Y-m-d H:i:s')
+        ]);
+
+        $testRecette->create();
+
+        $feedback = factory(Feedback::class)->create();
 
         $feedback->recette_id = $recette->id;
-        $feedback->commentaire = null;
          
         $response = $this-> actingAs ($user) ->post('/note', $feedback->getAttributes());
         $response -> assertSuccessful ();
