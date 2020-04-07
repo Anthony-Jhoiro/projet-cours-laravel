@@ -25,7 +25,6 @@ Route::middleware(['auth', 'verified']) -> group(function () {
 
     // --- Gestion des Ingrédients ---
     Route::post('ingredients', 'IngredientController@store')->name('ingredients.store');
-    Route::post('categories', 'CategorieController@store')->name('categories.store');
     Route::get('ingredients/recette/{id}', 'IngredientController@getByRecette')->name('assets.by.recette');
 
     // --- Gestion des assets ---
@@ -74,8 +73,14 @@ Route::get('/categories', 'CategorieController@get');
 // --- Authentification ---
 Route::post('/login', 'LoginController@loger');
 Auth::routes(['verify' => true]);
+Route::post('/login', 'LoginController@loger');
+
+
+
+
 
 
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
+
 

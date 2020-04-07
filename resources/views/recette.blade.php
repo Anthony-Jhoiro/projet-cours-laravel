@@ -139,29 +139,32 @@
             });
             recette_id = window.location.href.split('/').pop();
 
-            // post notation :
-            $('.mn').click(e => {
-                note = e.currentTarget.id;
+            // post notation : 
+            $(document).ready(() => {
+                $('.mn').click(e => {
+                    note = e.currentTarget.id;
+                    console.log(note);
 
-                $.ajax({
-                    method: 'POST',
-                    url: '/note',
-                    data: {note: note, recette_id: recette_id}
-                })
-                .done(data => {
-                    for(let i = 0; i < 5; i++){
-                        currentTasse = $('.mn')[i];
-                        if(i < data){
-                            currentTasse.classList.add('text-primary');
-                            currentTasse.classList.remove('text-secondary');
-                        } else{
-                            currentTasse.classList.add('text-secondary');
-                            currentTasse.classList.remove('text-primary');
-                        }
-                    }
-                })
-                
+                    $.ajax({
+                        method: 'POST',
+                        url: '/note',
+                        data: {note: note, recette_id: recette_id}
+                    }).done(data => { 
+                        for(let i = 0; i < 5; i++){
+                            currentTasse = $('.mn')[i];
+                            if(i < data){
+                                currentTasse.classList.add('text-primary');
+                                currentTasse.classList.remove('text-secondary');
+                            } 
+                            else {
+                                currentTasse.classList.add('text-secondary');
+                                currentTasse.classList.remove('text-primary');
+                            }
+                        } 
+                    })
+                });
             });
+            
 
             // note moyenne :
 
@@ -182,25 +185,26 @@
                 }
             });
 
-            // note user :
+            // //  note user :
 
-            $.ajax({
-                method: 'GET',
-                url: '/myNote/' + recette_id,
-            })
-            .done(data => {    
+            // $.ajax({
+            //     method: 'GET',
+            //     url: '/myNote/' + recette_id,
+            // })
+            // .done(data => {    
                             
-                for(let i = 0; i < 5; i++){
-                    currentTasse = $('.mn')[i];
-                    if(i < data){
-                        currentTasse.classList.add('text-primary');
-                        currentTasse.classList.remove('text-secondary');
-                    } else{
-                        currentTasse.classList.add('text-secondary');
-                        currentTasse.classList.remove('text-primary');
-                    }
-                }
-            });
+            //     for(let i = 0; i < 5; i++){
+            //         currentTasse = $('.mn')[i];
+            //         if(i < data){
+            //             currentTasse.classList.add('text-primary');
+            //             currentTasse.classList.remove('text-secondary');
+            //         } else{
+            //             currentTasse.classList.add('text-secondary');
+            //             currentTasse.classList.remove('text-primary');
+            //         }
+                    
+            //     }
+            // });
 
             // envoyer commentaire :
 
@@ -251,9 +255,7 @@
                 method: 'GET',
                 url: '/commentaires/' + recette_id
             })
-            .done(data => {
-                console.log(data);
-                
+            .done(data => {                
                 let div = $('#commentaires')[0];
                 
                 data.forEach(currentComm => {

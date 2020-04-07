@@ -5,6 +5,8 @@ $(() => {
 
     let ingredientsListe = [];
     let ingredientsListeForRecette = [];
+    let categories = [];
+    let categoriesForRecette = [];
     let photoUrls = [];
     let imageContainerSize = 0;
 
@@ -52,15 +54,37 @@ $(() => {
         });
     };
 
+    let addEventOnDropDownItemsCats = () => {
+
+        $('.categorie-item').click(function () {
+            categoriesForRecette.push({ libelle: $(this).text(), id: $(this).attr('value') });
+            $('#listeCat').append(" <li class=\"list-group-item p-1\">" + $(this).text() + "</li>");
+        });
+    };
+
     $.ajax({
         method: 'get',
         url: '/ingredients'
     }).done(data => {
-        ingredientsListe = data;
-        ingredientsListe.forEach(item => {
+        categories = data;
+        categories.forEach(item => {
             $('#selectIngredient').append('<li class="dropdown-item ingredient-item" value="' + item.id + '">' + item.libelle + '</li>')
         });
         addEventOnDropDownItems();
+    }); 
+
+
+    $.ajax({
+        method: 'get',
+        url: '/categories'
+    }).done(data => {
+        console.log(data);
+        
+        ingredientsListe = data;
+        ingredientsListe.forEach(item => {
+            $('#selectCat').append('<li class="dropdown-item categorie-item" value="' + item.id + '">' + item.libelle + '</li>')
+        });
+        addEventOnDropDownItemsCats();
     });
 
 
@@ -146,9 +170,8 @@ $(() => {
             },
         })
             .done((data) => {
-                if (data === 'success') {
-                    document.location.href="/home";
-                }
+                console.log(data);
+                window.location.href = '/home';
             })
             .fail((data) => {
                 console.log(data.responseText.message);
