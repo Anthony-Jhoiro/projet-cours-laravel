@@ -13,7 +13,7 @@ $(() => {
 
     let formulaire = $('#formulairePrincipal');
     let id = $('#recetteId').val();
-    let method = formulaire.attr('method')
+    let method = formulaire.attr('method');
 
     if (method != 'POST') {
         $.ajax({
@@ -21,10 +21,10 @@ $(() => {
             url: '/assets/recette/'+id
         }).done(data => {
             data.forEach(e => {
-                photoUrls.push(data);
+                photoUrls.push(e.url);
                 $('.carousel-item.active ').removeClass('active');
                 $('#imagesCarousel').append('<div class="carousel-item active">\n' +
-                    '                <img class="d-block w-100 img-carrous" src=' + e.url + '"/" alt="slide">\n' +
+                    '                <img class="d-block w-100 img-carrous" src="/' + e.url + '" alt="slide">\n' +
                     '            </div>');
                 $('#indicators-container').append('<li data-target="#carouselImage" data-slide-to="' + imageContainerSize + '"></li>');
             })
@@ -135,7 +135,7 @@ $(() => {
                 photoUrls.push(data);
                 $('.carousel-item.active ').removeClass('active');
                 $('#imagesCarousel').append('<div class="carousel-item active">\n' +
-                    '                <img class="d-block w-100 img-carrous" src=' + data + '"/" alt="slide">\n' +
+                    '                <img class="d-block w-100 img-carrous" src="/' + data + '" alt="slide">\n' +
                     '            </div>');
                 $('#indicators-container').append('<li data-target="#carouselImage" data-slide-to="' + imageContainerSize + '"></li>');
                 imageContainerSize++;
@@ -166,7 +166,7 @@ $(() => {
                 text: text,
                 photoUrls: photoUrls,
                 categories: categories,
-                ingredients: ingredientsListeForRecette.map(e => e.id)
+                ingredients: (ingredientsListeForRecette.map(e => e.id))
             },
         })
             .done((data) => {

@@ -27,7 +27,9 @@ class RecetteRequest extends FormRequest
         return [
             'titre' => 'bail|required|between:5,255',
             'text' => 'bail|required',
-            'photoUrls' => ''
+            'photoUrls' => 'array',
+            'ingredients' => 'array',
+            'categories' => 'array'
         ];
     }
 

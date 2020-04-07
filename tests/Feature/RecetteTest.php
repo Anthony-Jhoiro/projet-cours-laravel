@@ -64,27 +64,6 @@ class RecetteTest extends TestCase
        $this ->assertDatabaseHas ('recettes', ['titre' => $req->titre, 'text' => $req->text]);
    }
 
-    public function testUserCanCreateRecette2()
-    {
-        $user = factory (User::class)->create ();
-        $recette = factory (Recette::class)->make ();
-        $is = [factory (Ingredients::class)->create (), factory (Ingredients::class)->create (), factory (Ingredients::class)->create ()];
-        $cs = [factory (Categorie::class)->create (), factory (Categorie::class)->create (), factory (Categorie::class)->create ()];
-        $as = [factory (Assets::class)->make ()->url, factory (Assets::class)->make ()->url, factory (Assets::class)->make ()->url];
-
-        $response = $this->actingAs ($user)->post ('/recette', [
-            'titre' => $recette->titre,
-            'text' => $recette->text,
-            'ingredients' => $is,
-            'categories' => $cs,
-            'photoUrls' => $as
-        ]);
-
-        $this->assertDatabaseHas ('recettes', ['titre' => $recette->titre, 'text' => $recette->text]);
-        $this->assertDatabaseHas ('assets', ['titre' => $recette->titre, 'text' => $recette->text]);
-        $this->assertDatabaseHas ('recettes', ['titre' => $recette->titre, 'text' => $recette->text]);
-    }
-
     public function testUserCanNotCreateRecetteIfNotLogin() {
         $req = factory (Recette::class)->make ();
         $response = $this -> post ('/recette', $req->getAttributes ());

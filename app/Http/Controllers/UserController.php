@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Recette;
-use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -15,13 +15,17 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param DateController $dateController
      */
     public function __construct(DateController $dateController)
     {
         $this->dateController = $dateController;
     }
 
+    /**
+     * Génère la page de profil de l'utilisateur courant
+     * @return Factory|View
+     */
     public function index() {
         $parameters = [];
 

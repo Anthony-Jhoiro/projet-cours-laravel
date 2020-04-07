@@ -6,6 +6,9 @@
 
 @section('body')
     <h2>Profile de : {{$user->name}}</h2>
+    <a class="btn btn-secondary" href="{{ route('password.request') }}">
+        Modifier le mot de passe
+    </a>
     <ul class="list-group list-group-flush col-md-6">
         <li class="list-group-item">Adresse E-mail : {{ $user->email }}</li>
         <li class="list-group-item">Recette : {{ $recettes->count() }}</li>

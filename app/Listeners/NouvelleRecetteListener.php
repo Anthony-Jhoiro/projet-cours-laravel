@@ -30,13 +30,12 @@ class NouvelleRecetteListener
      */
     public function handle($event)
     {
-        Log::debug ($event->recette);
+        // Envoie d'un mail à tout les utilisateurs qui suivent l'auteur de la recette
         $auteur = Auth::user();
 
         $followers = $auteur->getFollowers;
 
         foreach ($followers as $follower) {
-//            Log::debug ($follower);
             Mail::to ($follower->email)->send (new NewPostMail($event->recette, $auteur));
         }
     }

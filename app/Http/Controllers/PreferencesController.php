@@ -34,8 +34,6 @@ class PreferencesController extends Controller
                 'derniere_visite' => now (),
                 'nb_visite' => $previousResult->nb_visite+1
             ]);
-
-            Log::debug ("result : ".$previousResult);
         }
     }
 

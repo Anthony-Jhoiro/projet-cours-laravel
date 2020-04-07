@@ -7,15 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Casrollton</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
-
-
     <!-- Javascript -->
     @yield('js_head')
-
-{{--    <script src="{{ asset ('js/ressources/popper.min.js') }}"></script>--}}
-{{--    <script src="{{ asset ('js/ressources/jquery.min.js') }}"></script>--}}
-{{--    <script src="{{ asset ('js/ressources/bootstrap.min.js') }}"></script>--}}
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
@@ -36,14 +29,15 @@
         <ul class="navbar-nav mr-auto">
             @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="/home">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/recette/edition">Nouvelle recette</a>
+                    <a class="nav-link" href="/recette/edition" dusk="nouvelle-recette">Nouvelle recette</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/profile">Mon compte</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}" id="deconnexionButton">Déconnexion</a>
                 </li>
