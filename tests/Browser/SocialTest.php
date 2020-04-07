@@ -6,19 +6,22 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class ExampleTest extends DuskTestCase
+class SocialTest extends DuskTestCase
 {
-    use DatabaseMigrations;
     /**
-     * A basic browser test example.
+     * A Dusk test example.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testExample()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/home')
                     ->assertSee('Cassrollton');
         });
     }
+
+    public function testUserCanFollowOtherUser() {}
+    public function testUserCanSeeRecommandationRecetteAtHome() {}
+    public function testUserCanUnsubscribeToOtherUser() {}
 }

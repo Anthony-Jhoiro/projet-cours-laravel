@@ -13,7 +13,8 @@ class Recette extends Model
         'maj',
         'ingredients',
         'assets',
-        'formatDate'
+        'formatDate',
+        'auteurNom'
     ];
 
 

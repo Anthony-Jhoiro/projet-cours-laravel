@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Recette;
+use App\User;
 use App\visitors;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -29,6 +32,10 @@ class HomeController extends Controller
      */
     public function index( Request $request )
     {
+
+        $recettesSuggerees = new Collection();
+        $recettesAbonnements = new Collection();
+        $recettes = [];
         if (isset($_GET['offset'])) $offset = $_GET['offset'];
         else $offset = 0;
         $size = 10;
@@ -37,12 +44,41 @@ class HomeController extends Controller
             $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->get();
         } else {
             $recettes = Recette::all();
+
+            if (Auth::check ()) {
+                // Chargement des recettes selon les préférences de l'utilisateur
+                $curentUser = Auth::user ();
+                $categories = $curentUser->getCategoriesPreferees;
+                foreach ($categories as $category) {
+                    $recettesSuggerees = $recettesSuggerees->merge(Recette::has ('getCategories', '=', $category->id)->get());
+                }
+
+                $suivis = $curentUser->getInfluencers;
+                foreach ($suivis as $suivi) {
+                    $recettesAbonnements = $recettesAbonnements->merge(Recette::where('auteur', $suivi->id)->get());
+                }
+            }
         }
+
+
 
         // Pour chaque recette on formatte la date et on controlle la taille du texte
         foreach ($recettes as $recette) {
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
             $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur)->name;
+        }
+
+        foreach ($recettesSuggerees as $recette) {
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
+            $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur)->name;
+        }
+
+        foreach ($recettesAbonnements as $recette) {
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
+            $recette -> dateFormat = $this->dateController->getFormatDate ( $recette -> updated_at);
+            $recette -> auteurNom = User::find($recette->auteur )->name;
         }
 
         // Controlle du nombre de visite
@@ -64,8 +100,12 @@ class HomeController extends Controller
             visitors::create(['ip' => $clientIp]);
         }
 
+
+
         return view ( 'home', [
             'recettes' => $recettes,
+            'recettesSuggerees' => $recettesSuggerees,
+            'recettesAbonnements' => $recettesAbonnements,
             'totalVisitors' => Visitors::count()
         ]);
     }

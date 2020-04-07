@@ -49,7 +49,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a id="connexionLink" class="nav-link" href="/login">Connexion</a>
+                    <a id="connexionLink" class="nav-link" href="/login" dusk="connexionButton">Connexion</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Créer un compte</a>
