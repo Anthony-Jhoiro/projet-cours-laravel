@@ -89,14 +89,13 @@
 
     <div id="carouselImage" class="carousel slide mx-auto" style="width: 600px" data-ride="carousel">
         <ol class="carousel-indicators" id="indicators-container">
-            <li data-target="#carouselImage" data-slide-to="0" class="active"></li>
         </ol>
         <div class="carousel-inner" id="imagesCarousel">
-            @foreach($assets as $asset)
-                <div class="carousel-item asset-item ">
-                    <img src="/{{ $asset->url }}" class="img-carrous d-block w-100" alt="...">
-                </div>
-            @endforeach
+{{--            @foreach($assets as $asset)--}}
+{{--                <div class="carousel-item asset-item ">--}}
+{{--                    <img src="/{{ $asset->url }}" class="img-carrous d-block w-100" alt="...">--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
 
         </div>
         <a class="carousel-control-prev" href="#carouselImage" role="button" data-slide="prev">

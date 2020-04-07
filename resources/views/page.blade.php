@@ -39,7 +39,7 @@
                     <a class="nav-link" href="/home">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/recette/edition">Nouvelle recette</a>
+                    <a class="nav-link" href="/recette/edition" dusk="nouvelle-recette">Nouvelle recette</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/profile">Mon compte</a>

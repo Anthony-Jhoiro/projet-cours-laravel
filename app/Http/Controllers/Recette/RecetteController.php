@@ -140,7 +140,12 @@ class RecetteController extends Controller
         $photoUrls = $request -> input ( 'photoUrls' );
         if ($photoUrls === null) $photoUrls = [];
 
+
         foreach ($photoUrls as $photoUrl) {
+            Log::debug ("coucou", [
+                'url' => $photoUrl,
+                'recette_id' => $recette -> id
+            ]);
             Assets ::create ( [
                 'url' => $photoUrl,
                 'recette_id' => $recette -> id
@@ -164,7 +169,7 @@ class RecetteController extends Controller
         $recette -> getCategories () -> attach ( $request -> categories );
 
 
-        return view ('home');
+        return "success";
     }
 
     public function delete(Request $request, $id) {

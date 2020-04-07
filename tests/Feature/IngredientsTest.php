@@ -47,8 +47,4 @@ class IngredientsTest extends TestCase
         $this->assertDatabaseMissing ('ingredients', ['libelle' => $ingredient->libelle]);
     }
 
-//    public function testUserCanNotCreateIngredientIfAlreadyExist()
-//    {
-//        // TODO : to implement
-//    }
 }
