@@ -19,7 +19,7 @@ class ContactController extends Controller
     public function store(ContactRequest $request) {
         Log::debug ($request);
 //        Mail::to ('moi@moi.moi')->send (new Contact($request->except ('_token')));
-        Mail::to ('moi@moi.moi')->send (new NewPostMail());
-        return view('contact');
+        Mail::to ('moi@moi.moi')->send (new Contact($request->except ('_token')));
+        return redirect()->route('home');
     }
 }

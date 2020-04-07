@@ -20,7 +20,7 @@ class FeedbackController extends Controller
     }
 
     public function storeNote(Request $request){
-        
+
         $recette_id = $request -> input('recette_id');
         $note = $request -> input('note');
         $user_id = Auth::user()->id;
@@ -33,12 +33,12 @@ class FeedbackController extends Controller
             'commentaire' => null
         ]);
 
-        $feed = Feedback::where('user_id', $user_id) 
+        $feed = Feedback::where('user_id', $user_id)
                         -> where('recette_id', $recette_id)
                         -> first();
-        
 
-        
+
+
         if($feed == NULL){
             $newfeed -> save();
         }
@@ -53,7 +53,7 @@ class FeedbackController extends Controller
     public function indexNoteMoyenne(Request $request, $recette_id){
 
         log::debug('ok');
-        
+
         $noteMoyenne = Feedback::where('recette_id', $recette_id)->avg('note');
         $noteMoyenne = round(intval($noteMoyenne));
 
@@ -71,7 +71,7 @@ class FeedbackController extends Controller
     }
 
     public function storeCommentaire(Request $request){
-        
+
         $recette_id = $request -> input('recette_id');
         $comm = $request -> input('comm');
         $user_id = Auth::user()->id;
@@ -84,14 +84,12 @@ class FeedbackController extends Controller
             'commentaire' => $comm
         ]);
 
-        log::debug(['commentaire' => $comm]);
-
-        $feed = Feedback::where('user_id', $user_id) 
+        $feed = Feedback::where('user_id', $user_id)
                         -> where('recette_id', $recette_id)
                         -> first();
-        
 
-        
+
+
         if($feed == NULL){
             $newfeed -> save();
         }
