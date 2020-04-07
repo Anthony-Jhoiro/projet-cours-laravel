@@ -213,7 +213,7 @@
                 
                 $.ajax({
                     method: 'POST',
-                    url: '/comm',
+                    url: '/commentaire',
                     data: {comm: text, recette_id: recette_id}
                 })
                 .done(data => {

@@ -95,6 +95,8 @@
             $('#btn-tri').click(e => {
                 e.preventDefault();
                 categorieId = $('#selectCat')[0].value;
+                console.log('ok');
+                
 
                 if(categorieId == -1){
                     return;
@@ -105,9 +107,11 @@
                     url: '/recette/categorie/' + categorieId
                 })
                 .done(data => {
+                    console.log(data);
+                    
                     $('#recette').innerHTML = "";
                     data.forEach(currentRecette => {
-                        $('#recette').append('<div class="p-3 col-md-4"><article class="card"><div class="card-body"><h5 class="card-title">' +  currentRecette.titre  + '</h5><p class="card-text">' + currentRecette.text + '</p><a href="recette/' + currentRecette.id + '" class="btn btn-primary">Essayer</a> </div><div class="card-footer text-muted"> <h6>Par {{ $recette->auteurNom }}</h6><h6>Mis à jour le {{ $recette->dateFormat }}</h6></div></article></div>');
+                        $('#recette').append('<div class="p-3 col-md-4"><article class="card"><div class="card-body"><h5 class="card-title">' +  currentRecette.titre  + '</h5><p class="card-text">' + currentRecette.text + '</p><a href="recette/' + currentRecette.id + '" class="btn btn-primary">Essayer</a> </div><div class="card-footer text-muted"> <h6>Par ' + currentRecette.name + '</h6><h6>Mis à jour le ' + currentRecette.updated_at + '</h6></div></article></div>');
                     })
                     
                 })

@@ -78,8 +78,15 @@ class RecetteController extends Controller
     }
 
     public function indexByCategorie(Request $request, $categorie_id){
-        $recettes = Recette::join('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')->where('id_categorie', $categorie_id)->get();
+        $recettes = Recette::select('titre', 'text', 'recettes.id', 'recettes.updated_at', 'name')
+                            ->join('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')
+                            ->join('users', 'recettes.auteur', '=', 'users.id')
+                            ->where('id_categorie', $categorie_id)
+                            ->get();
 
+        foreach ($recettes as $recette) {
+            $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
+        }
         return $recettes;
     }
 
