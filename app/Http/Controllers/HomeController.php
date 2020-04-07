@@ -61,7 +61,6 @@ class HomeController extends Controller
         }
 
 
-
         // Pour chaque recette on formatte la date et on controlle la taille du texte
         foreach ($recettes as $recette) {
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
@@ -99,8 +98,6 @@ class HomeController extends Controller
             // le visiteur est nouveau
             visitors::create(['ip' => $clientIp]);
         }
-
-
 
         return view ( 'home', [
             'recettes' => $recettes,

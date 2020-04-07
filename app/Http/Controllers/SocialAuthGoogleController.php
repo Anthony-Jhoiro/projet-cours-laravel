@@ -8,7 +8,11 @@ use Socialite;
 use Auth;
 use Exception;
 
-
+/**
+ * A implémenter dans la perspective d'un déploiement
+ * Class SocialAuthGoogleController
+ * @package App\Http\Controllers
+ */
 class SocialAuthGoogleController extends Controller
 {
     public function redirect()

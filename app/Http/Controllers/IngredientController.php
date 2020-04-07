@@ -15,7 +15,7 @@ class IngredientController extends Controller
     }
 
     /**
-     * si l'ingrédient n'existe pas, le créer
+     * si l'ingrédient n'existe pas, le créé
      * @param IngredientRequest $request
      * @return Ingredients[]|\Illuminate\Database\Eloquent\Collection|void
      */
@@ -32,9 +32,14 @@ class IngredientController extends Controller
         Ingredients::create(['libelle' => $request->get ('libelle')]);
 
         return self::get ();
-
     }
 
+    /**
+     * Renvoie la liste des ingrédients pour une recette
+     * @param Request $request
+     * @param $id number  id de la recette
+     * @return mixed
+     */
     public function getByRecette(Request $request, $id) {
         $recette = Recette::findOrFail($id);
 

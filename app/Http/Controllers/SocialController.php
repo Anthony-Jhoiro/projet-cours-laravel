@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class SocialController extends Controller
 {
     /**
-     * Ajoute l'utilisateur courant aux "suiveurs" de l'utilisateur donné d ans la requete
+     * Ajoute l'utilisateur courant aux "suiveurs" de l'utilisateur donné dans la requete
      * @param SocialRequest $request
      * @return string
      */
@@ -26,6 +26,11 @@ class SocialController extends Controller
 
     }
 
+    /**
+     * Supprime l'utilisateur courant des "suiveurs" de l'utilisateur donné en parametre
+     * @param Request $request
+     * @param $id
+     */
     public function unFollow(Request $request, $id) {
         $user = User::findOrFail($id);
         $user->getFollowers()->detach(Auth::user ()->id);

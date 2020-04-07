@@ -16,9 +16,12 @@ class ContactController extends Controller
         return view('contact');
     }
 
+    /**
+     * Envoie un mail à "l'administrateur" du site avec le contenue du formulaire de contact de l'utilisateur
+     * @param ContactRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(ContactRequest $request) {
-        Log::debug ($request);
-//        Mail::to ('moi@moi.moi')->send (new Contact($request->except ('_token')));
         Mail::to ('moi@moi.moi')->send (new Contact($request->except ('_token')));
         return redirect()->route('home');
     }

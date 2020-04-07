@@ -29,6 +29,12 @@ class PhotoController extends Controller
         return $request->image->store(config('images.path'), 'public');
     }
 
+    /**
+     * Renvoie la liste des images en fonction de la recette
+     * @param Request $request
+     * @param $id number id de la recette
+     * @return mixed
+     */
     public function getByRecette(Request $request, $id) {
         $recette = Recette::findOrFail($id);
 

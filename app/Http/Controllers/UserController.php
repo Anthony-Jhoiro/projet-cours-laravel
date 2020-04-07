@@ -22,6 +22,10 @@ class UserController extends Controller
         $this->dateController = $dateController;
     }
 
+    /**
+     * Génère la page de profil de l'utilisateur courant
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index() {
         $parameters = [];
 

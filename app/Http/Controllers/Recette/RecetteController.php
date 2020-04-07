@@ -142,10 +142,6 @@ class RecetteController extends Controller
 
 
         foreach ($photoUrls as $photoUrl) {
-            Log::debug ("coucou", [
-                'url' => $photoUrl,
-                'recette_id' => $recette -> id
-            ]);
             Assets ::create ( [
                 'url' => $photoUrl,
                 'recette_id' => $recette -> id
