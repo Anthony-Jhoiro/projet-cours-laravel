@@ -92,6 +92,18 @@
 
         <section class="col recetteContent m-5">{!! $recette->text !!}</section>
 
+        <section class="col border-top border-primary mx-auto">
+            @if(Auth::check())
+                <div class="row col-md-12">
+                    <h4>Laissez nous un commentaire :</h4>
+                    <textarea name="commentaire" id="comm" class="border border-primary rounded" cols="147" rows="10" style="resize: none;"></textarea>
+                    <button class="btn btn-primary mt-1 float-right row" id="envoyer-com">envoyer</button>
+                </div>
+            @endif
+            <div class="col-md-12 row mt-4 mb-4" id="commentaires">
+            </div>
+        </section>
+
 
     </div>
 
@@ -122,13 +134,12 @@
                     url: '/social',
                     data: { id: id }
                 }).done(data => {
-                    console.log(data);
                 })
 
             });
             recette_id = window.location.href.split('/').pop();
 
-            // notation :
+            // post notation :
             $('.mn').click(e => {
                 note = e.currentTarget.id;
 
@@ -178,7 +189,6 @@
                 url: '/myNote/' + recette_id,
             })
             .done(data => {    
-                console.log(data);
                             
                 for(let i = 0; i < 5; i++){
                     currentTasse = $('.mn')[i];
@@ -191,6 +201,68 @@
                     }
                 }
             });
+
+            // envoyer commentaire :
+
+            $('#envoyer-com').click(e => {
+                text = $('#comm')[0].value;
+                
+                $.ajax({
+                    method: 'POST',
+                    url: '/comm',
+                    data: {comm: text, recette_id: recette_id}
+                })
+                .done(data => {
+                    let user = data.user;
+                    
+                    let now = new Date();
+                    let year = now.getFullYear();
+                    let day = now.getDate();
+                    months = [
+                        'janvier',
+                        'février',
+                        'mars',
+                        'avril',
+                        'mai',
+                        'juin',
+                        'août',
+                        'septembre',
+                        'octobre',
+                        'novembre',
+                        'décembre'
+                    ]
+                    let month = months[now.getMonth()];
+                    let hour = now.getHours();
+                    let minute = now.getMinutes();
+
+                    let formatDate = 'posté le ' + day + ' ' + month + ' ' + year + ' à ' + hour + ':' + minute;
+                    console.log(formatDate);
+                    
+                    
+                    let div = $('#commentaires')[0];
+                    div.innerHTML = "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + user + "</h5><h6 class='text-secondary'>" + formatDate + "</h6><pre>" + data.commentaire + "</pre></div>" +  div.innerHTML;                    
+                    
+                })
+            })
+
+            // afficher les commentaires :
+
+            $.ajax({
+                method: 'GET',
+                url: '/commentaires/' + recette_id
+            })
+            .done(data => {
+                console.log(data);
+                
+                let div = $('#commentaires')[0];
+                
+                data.forEach(currentComm => {
+                    div.innerHTML += "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + currentComm.user + "</h5><h6 class='text-secondary'>posté le " + currentComm.date + "</h6><pre>" + currentComm.commentaire + "</pre></div>"; 
+                })
+                
+            })
+
+
         });
 
     </script>
