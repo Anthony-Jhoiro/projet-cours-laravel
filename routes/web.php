@@ -15,9 +15,6 @@
 Route::redirect('/', '/home');
 Route::get('/home', 'HomeController@index')->name('home');
 
-// ?
-Route::post('/home', 'HomeController@filtre')->name('home');
-
 // Routes disponibles si l'utilisateur est authentifié et que son adresse email est vérifiée
 Route::middleware(['auth', 'verified']) -> group(function () {
     // --- Gestion des recettes ---
