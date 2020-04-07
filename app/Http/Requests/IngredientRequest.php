@@ -24,7 +24,7 @@ class IngredientRequest extends FormRequest
     public function rules()
     {
         return [
-            'libelle' => 'required'
+            'libelle' => 'required|min:2'
         ];
     }
 }
