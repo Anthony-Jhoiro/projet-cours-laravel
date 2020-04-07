@@ -41,7 +41,6 @@ class LoginController extends Controller
     }
 
     public function loger(){
-        Log::debug ("coucou");
         try {
             $sections = view ( 'login' ) -> renderSections ();
             return $sections['body'];

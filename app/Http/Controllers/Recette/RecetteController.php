@@ -77,6 +77,12 @@ class RecetteController extends Controller
         return view('recette', compact ('recette'));
     }
 
+    public function indexByCategorie(Request $request, $categorie_id){
+        $recettes = Recette::join('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')->where('id_categorie', $categorie_id)->get();
+
+        return $recettes;
+    }
+
     /**
      * Créé la recette en base
      * @param RecetteRequest $request

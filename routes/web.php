@@ -30,6 +30,7 @@ Route::middleware(['auth']) -> group(function () {
 
 
     Route::post('ingredients', 'IngredientController@store')->name('ingredients.store');
+    Route::post('categories', 'CategorieController@store')->name('categories.store');
 
     Route::post('preferences', 'PreferencesController@store')->name('preferences.store');
     Route::delete('recette/{id}', 'Recette\RecetteController@delete')->name('recette.delete');
@@ -50,6 +51,7 @@ Route::middleware(['auth']) -> group(function () {
 
     Route::get('assets/recette/{id}', 'PhotoController@getByRecette')->name('assets.by.recette');
     Route::get('ingredients/recette/{id}', 'IngredientController@getByRecette')->name('assets.by.recette');
+    Route::get('categories/recette/{id}', 'CategorieController@getByRecette')->name('cats.by.recette');
 });
 
 Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
@@ -57,6 +59,7 @@ Route::get('/commentaires/{id}', 'FeedbackController@indexCommentaires');
 
 
 Route::get('recette/{id}', 'Recette\RecetteController@index');
+Route::get('recette/categorie/{id}', 'Recette\RecetteController@indexByCategorie');
 
 Route::get('recettes/{nom}',  'Recette\RecetteController@list')->name('recette.liste');
 
@@ -72,4 +75,5 @@ Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Route::get('/ingredients', 'IngredientController@get');
+Route::get('/categories', 'CategorieController@get');
 
