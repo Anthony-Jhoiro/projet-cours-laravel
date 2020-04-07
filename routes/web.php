@@ -53,7 +53,7 @@ Route::middleware(['auth']) -> group(function () {
 });
 
 Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
-Route::get('/commentaires/{id}', 'FeedbackController@')
+Route::get('/commentaires/{id}', 'FeedbackController@');
 
 
 Route::get('recette/{id}', 'Recette\RecetteController@index');
