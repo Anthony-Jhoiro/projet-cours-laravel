@@ -70,7 +70,7 @@
                     </div>
                 @endif
                 <div class="row mb-2">
-                    <h4 class="col-md-7">note des utilisateurs :</h4>
+                    <h4 class="col-md-7">Note des utilisateurs :</h4>
                     <i class="fas fa-mug-hot text-secondary mr-1 moy" value="1"></i>
                     <i class="fas fa-mug-hot text-secondary mr-1 moy" value="2"></i>
                     <i class="fas fa-mug-hot text-secondary mr-1 moy" value="3"></i>
@@ -139,7 +139,7 @@
             });
             recette_id = window.location.href.split('/').pop();
 
-            // post notation : 
+            // post notation :
             $(document).ready(() => {
                 $('.mn').click(e => {
                     note = e.currentTarget.id;
@@ -149,22 +149,22 @@
                         method: 'POST',
                         url: '/note',
                         data: {note: note, recette_id: recette_id}
-                    }).done(data => { 
+                    }).done(data => {
                         for(let i = 0; i < 5; i++){
                             currentTasse = $('.mn')[i];
                             if(i < data){
                                 currentTasse.classList.add('text-primary');
                                 currentTasse.classList.remove('text-secondary');
-                            } 
+                            }
                             else {
                                 currentTasse.classList.add('text-secondary');
                                 currentTasse.classList.remove('text-primary');
                             }
-                        } 
+                        }
                     })
                 });
             });
-            
+
 
             // note moyenne :
 
@@ -172,7 +172,7 @@
                 method: 'GET',
                 url: '/noteMoyenne/' + recette_id,
             })
-            .done(data => {                
+            .done(data => {
                 for(let i = 0; i < 5; i++){
                     currentTasse = $('.moy')[i];
                     if(i < data){
@@ -191,8 +191,8 @@
             //     method: 'GET',
             //     url: '/myNote/' + recette_id,
             // })
-            // .done(data => {    
-                            
+            // .done(data => {
+
             //     for(let i = 0; i < 5; i++){
             //         currentTasse = $('.mn')[i];
             //         if(i < data){
@@ -202,7 +202,7 @@
             //             currentTasse.classList.add('text-secondary');
             //             currentTasse.classList.remove('text-primary');
             //         }
-                    
+
             //     }
             // });
 
@@ -210,7 +210,7 @@
 
             $('#envoyer-com').click(e => {
                 text = $('#comm')[0].value;
-                
+
                 $.ajax({
                     method: 'POST',
                     url: '/comm',
@@ -218,7 +218,7 @@
                 })
                 .done(data => {
                     let user = data.user;
-                    
+
                     let now = new Date();
                     let year = now.getFullYear();
                     let day = now.getDate();
@@ -241,11 +241,11 @@
 
                     let formatDate = 'posté le ' + day + ' ' + month + ' ' + year + ' à ' + hour + ':' + minute;
                     console.log(formatDate);
-                    
-                    
+
+
                     let div = $('#commentaires')[0];
-                    div.innerHTML = "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + user + "</h5><h6 class='text-secondary'>" + formatDate + "</h6><pre>" + data.commentaire + "</pre></div>" +  div.innerHTML;                    
-                    
+                    div.innerHTML = "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + user + "</h5><h6 class='text-secondary'>" + formatDate + "</h6><pre>" + data.commentaire + "</pre></div>" +  div.innerHTML;
+
                 })
             })
 
@@ -255,13 +255,13 @@
                 method: 'GET',
                 url: '/commentaires/' + recette_id
             })
-            .done(data => {                
+            .done(data => {
                 let div = $('#commentaires')[0];
-                
+
                 data.forEach(currentComm => {
-                    div.innerHTML += "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + currentComm.user + "</h5><h6 class='text-secondary'>posté le " + currentComm.date + "</h6><pre>" + currentComm.commentaire + "</pre></div>"; 
+                    div.innerHTML += "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + currentComm.user + "</h5><h6 class='text-secondary'>posté le " + currentComm.date + "</h6><pre>" + currentComm.commentaire + "</pre></div>";
                 })
-                
+
             })
 
 

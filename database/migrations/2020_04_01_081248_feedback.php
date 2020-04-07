@@ -28,9 +28,10 @@ class Feedback extends Migration
                 ->on('recettes')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
-            
-            $table->enum('note', [1, 2, 3, 4, 5]);
+
+            $table->enum('note', [1, 2, 3, 4, 5])->default(null);
             $table->text('commentaire')->default(null);
+            $table->timestamps ();
 
         });
     }
