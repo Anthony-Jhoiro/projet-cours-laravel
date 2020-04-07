@@ -44,7 +44,7 @@ class NouvelleVisiteListener
 
         } else {
             // le visiteur est nouveau
-            visitors ::create ( [ 'ip' => $clientIp ] );
+            visitors ::create ( [ 'ip' => $clientIp, 'nbVisit' => 0 ] );
         }
     }
 }
