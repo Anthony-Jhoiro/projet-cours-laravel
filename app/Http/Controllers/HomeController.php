@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NouvelleVisite;
 use App\Recette;
 use App\User;
 use App\visitors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -80,30 +79,13 @@ class HomeController extends Controller
             $recette -> auteurNom = User::find($recette->auteur )->name;
         }
 
-        // Controlle du nombre de visite
-        // RULE : à chaque fois qu'un visiteur visite '/home', si sa dernière connexion
-        // remonte à plus de 30min, on l'ajoute à la base de donnée
-        $clientIp = $request -> ip();
-
-        $visitor = visitors::where('ip', $clientIp)->orderBy('updated_at', 'desc')->first();
-        if ($visitor != NULL) {
-            // le visiteur est déjà venu
-            if ($visitor->updated_at->diffInMinutes(now ()) > 30) {
-                visitors::create(['ip' => $clientIp]);
-            } else {
-                $visitor->updated_at = now ();
-                $visitor->save();
-            }
-        } else {
-            // le visiteur est nouveau
-            visitors::create(['ip' => $clientIp]);
-        }
+        event (new NouvelleVisite($request->ip ()));
 
         return view ( 'home', [
             'recettes' => $recettes,
             'recettesSuggerees' => $recettesSuggerees,
             'recettesAbonnements' => $recettesAbonnements,
-            'totalVisitors' => Visitors::count()
+            'totalVisitors' => Visitors::sum('nbVisit')
         ]);
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\NouvelleRecette;
+use App\Events\NouvelleVisite;
 use App\Listeners\NouvelleRecetteListener;
+use App\Listeners\NouvelleVisiteListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NouvelleRecette::class => [
             NouvelleRecetteListener::class
+        ],
+        NouvelleVisite::class => [
+            NouvelleVisiteListener::class
         ]
     ];
 
