@@ -41,6 +41,8 @@ Route::middleware(['auth']) -> group(function () {
 
     Route::post('/note', 'FeedbackController@storeNote');
     Route::get('/myNote/{id}', 'FeedbackController@indexMyNote');
+    
+    Route::post('/comm', 'FeedbackController@storeCommentaire');
 
     Route::post('photo', 'PhotoController@store');
     Route::get('contact', 'ContactController@index');
@@ -51,6 +53,7 @@ Route::middleware(['auth']) -> group(function () {
 });
 
 Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
+Route::get('/commentaires/{id}', 'FeedbackController@')
 
 
 Route::get('recette/{id}', 'Recette\RecetteController@index');
