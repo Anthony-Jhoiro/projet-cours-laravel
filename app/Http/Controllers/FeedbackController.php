@@ -8,9 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 use App\Feedback;
+use App\User;
+
+use Date;
 
 class FeedbackController extends Controller
 {
+    public function __construct(DateController $dateController)
+    {
+        $this->dateController = $dateController;
+    }
+
     public function storeNote(Request $request){
         
         $recette_id = $request -> input('recette_id');
@@ -96,6 +104,24 @@ class FeedbackController extends Controller
             'user' => Auth::user()->name,
             'commentaire' => $comm
         ];
+
+        return $return;
+    }
+
+    public function indexCommentaires(Request $request, $recette_id){
+
+        $comms = Feedback::where('recette_id', $recette_id)->whereNotNull('commentaire')->orderBy('updated_at', 'DESC')->get();
+
+        $return = [];
+        foreach($comms as $com){
+            $user = User::select('name')->where('id', $com['user_id'])->first();
+            $returncomm = [
+            "user" => $user['name'],
+            "commentaire" => $com["commentaire"],
+            "date" => $this->dateController->getFormatDate ( $com['updated_at'])
+            ];
+            array_push($return, $returncomm);
+        }
 
         return $return;
     }

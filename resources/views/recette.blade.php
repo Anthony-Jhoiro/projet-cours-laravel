@@ -134,7 +134,6 @@
                     url: '/social',
                     data: { id: id }
                 }).done(data => {
-                    console.log(data);
                 })
 
             });
@@ -190,7 +189,6 @@
                 url: '/myNote/' + recette_id,
             })
             .done(data => {    
-                console.log(data);
                             
                 for(let i = 0; i < 5; i++){
                     currentTasse = $('.mn')[i];
@@ -215,9 +213,7 @@
                     data: {comm: text, recette_id: recette_id}
                 })
                 .done(data => {
-                    console.log(data);
                     let user = data.user;
-                    console.log(user);
                     
                     let now = new Date();
                     let year = now.getFullYear();
@@ -253,7 +249,17 @@
 
             $.ajax({
                 method: 'GET',
-                url: ''
+                url: '/commentaires/' + recette_id
+            })
+            .done(data => {
+                console.log(data);
+                
+                let div = $('#commentaires')[0];
+                
+                data.forEach(currentComm => {
+                    div.innerHTML += "<div class='col-md-12 bg-light rounded mt-4 mb-2'><h5>" + currentComm.user + "</h5><h6 class='text-secondary'>posté le " + currentComm.date + "</h6><pre>" + currentComm.commentaire + "</pre></div>"; 
+                })
+                
             })
 
 
