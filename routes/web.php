@@ -71,8 +71,8 @@ Route::get('recettes/{nom}',  'Recette\RecetteController@list')->name('recette.l
 Route::get('/ingredients', 'IngredientController@get');
 
 // --- Authentification ---
-Auth::routes(['verify' => true]);
 Route::post('/login', 'LoginController@loger');
+Auth::routes(['verify' => true]);
 
 
 
