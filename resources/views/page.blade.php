@@ -54,7 +54,7 @@
         </ul>
         <div class="form-inline my-2 my-lg-0">
             <input id="recherche" class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="filtre" placeholder="rechercher" value="{{ old('nom') }}">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="submit">Rechercher une recette</button>
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search-bar">Rechercher une recette</button>
         </div>
     </div>
 </nav>
@@ -71,40 +71,6 @@
         </div>
     </div>
 </div>
-<script>
-    $(() => {
-        $('#connexionLink').click(e => {
-            e.preventDefault();
-            $.ajax({
-                url: '/login',
-                method: 'get',
-                success: data => {
-                    console.log(data)
-                    console.log($(data).find('div'))
-                    $('#modalBody').html($(data).find('div.container').html());
-                    $('#modal').modal({
-                        show: true
-                    })
-                },
-                error: err => console.err(err)
-            })
-        });
-
-        $('#deconnexionButton').click(e => {
-            e.preventDefault();
-            document.getElementById('logout-form').submit();
-        });
-    })
-</script>
-@yield('js')
-<script>
-
-    $('#submit').click(() => {
-        let search = $('#recherche')[0].value;
-        if(search != ""){
-            window.location.href = "/home?s=" + search + "&l=1";
-        }
-    })
-</script>
+<script src="{{ asset ('js/pages/nav-bar.js') }}"></script>
 </body>
 </html>

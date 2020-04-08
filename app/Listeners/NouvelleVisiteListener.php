@@ -40,7 +40,6 @@ class NouvelleVisiteListener
             }
             $visitor -> updated_at = now ();
             $visitor -> save ();
-            Log::debug ($visitor);
 
         } else {
             // le visiteur est nouveau
