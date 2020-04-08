@@ -12,7 +12,7 @@
     <div class="row">
         <select name="categorieTri" id="selectCat" class="col-md-3 border border-info rounded">
             <!-- feet by js -->
-            <option value="-1">Choisissez une catégorie</option>
+            <option value="-1">Tout</option>
         </select>
         <button class="btn btn-success ml-2" id="btn-tri">trier</button>
     </div>
@@ -95,8 +95,20 @@
             $('#btn-tri').click(e => {
                 e.preventDefault();
                 categorieId = $('#selectCat')[0].value;
+                
 
                 if(categorieId == -1){
+                    $.ajax({
+                    method: 'GET',
+                    url: '/recettes/'
+                    })
+                    .done(data => {
+                        
+                        $('#recette').html("");
+                        data.forEach(currentRecette => {
+                            $('#recette').append('<div class="p-3 col-md-4"><article class="card"><div class="card-body"><h5 class="card-title">' +  currentRecette.titre  + '</h5><p class="card-text">' + currentRecette.text + '</p><a href="recette/' + currentRecette.id + '" class="btn btn-primary">Essayer</a> </div><div class="card-footer text-muted"> <h6>Par ' + currentRecette.name + '</h6><h6>Mis à jour le ' + currentRecette.updated_at + '</h6></div></article></div>');
+                        })
+                    })
                     return;
                 }
                 
@@ -105,9 +117,10 @@
                     url: '/recette/categorie/' + categorieId
                 })
                 .done(data => {
-                    $('#recette').innerHTML = "";
+                    
+                    $('#recette').html("");
                     data.forEach(currentRecette => {
-                        $('#recette').append('<div class="p-3 col-md-4"><article class="card"><div class="card-body"><h5 class="card-title">' +  currentRecette.titre  + '</h5><p class="card-text">' + currentRecette.text + '</p><a href="recette/' + currentRecette.id + '" class="btn btn-primary">Essayer</a> </div><div class="card-footer text-muted"> <h6>Par {{ $recette->auteurNom }}</h6><h6>Mis à jour le {{ $recette->dateFormat }}</h6></div></article></div>');
+                        $('#recette').append('<div class="p-3 col-md-4"><article class="card"><div class="card-body"><h5 class="card-title">' +  currentRecette.titre  + '</h5><p class="card-text">' + currentRecette.text + '</p><a href="recette/' + currentRecette.id + '" class="btn btn-primary">Essayer</a> </div><div class="card-footer text-muted"> <h6>Par ' + currentRecette.name + '</h6><h6>Mis à jour le ' + currentRecette.updated_at + '</h6></div></article></div>');
                     })
                     
                 })

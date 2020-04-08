@@ -52,9 +52,7 @@ class FeedbackController extends Controller
 
     public function indexNoteMoyenne(Request $request, $recette_id){
 
-        log::debug('ok');
-
-        $noteMoyenne = Feedback::where('recette_id', $recette_id)->avg('note');
+        $noteMoyenne = Feedback::where('recette_id', $recette_id)->whereNotNull('note')->avg('note');
         $noteMoyenne = round(intval($noteMoyenne));
 
         return $noteMoyenne;
@@ -63,7 +61,10 @@ class FeedbackController extends Controller
     public function indexMyNote(Request $request, $recette_id){
 
         $id = Auth::user()->id;
-        $myNote = Feedback::where('recette_id', $recette_id)->where('user_id', $id)->get()[0]['note'];
+        $myNote = Feedback::where('recette_id', $recette_id)->where('user_id', $id)->get();
+        if(count($myNote) != 0){
+            $myNote = $myNote[0]['note'];
+        }
 
         if($myNote == null) $myNote = 0;
 
