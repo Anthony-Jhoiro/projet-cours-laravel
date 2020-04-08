@@ -86,6 +86,20 @@ class RecetteController extends Controller
 
         foreach ($recettes as $recette) {
             $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
+        }
+        return $recettes;
+    }
+
+    public function indexAll(Request $request){
+        $recettes = Recette::select('titre', 'text', 'recettes.id', 'recettes.updated_at', 'name')
+                            ->leftJoin('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')
+                            ->join('users', 'recettes.auteur', '=', 'users.id')
+                            ->get();
+
+        foreach ($recettes as $recette) {
+            $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
+            $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
         }
         return $recettes;
     }

@@ -61,6 +61,7 @@ Route::post('contact', 'ContactController@store');
 // --- Récupération des informations pour une recette ---
 Route::get('recette/{id}', 'Recette\RecetteController@index');
 Route::get('recette/categorie/{id}', 'Recette\RecetteController@indexByCategorie');
+Route::get('recettes/', 'Recette\RecetteController@indexAll');
 
 Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
 Route::get('/commentaires/{id}', 'FeedbackController@indexCommentaires');
