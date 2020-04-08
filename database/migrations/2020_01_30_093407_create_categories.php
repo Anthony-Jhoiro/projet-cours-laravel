@@ -18,6 +18,17 @@ class CreateCategories extends Migration
             $table->string('libelle');
             $table->timestamps ();
         });
+
+        // Insert categories
+        DB::table('categories')->insert(['libelle' => 'dessert']);
+        DB::table('categories')->insert(['libelle' => 'entrée']);
+        DB::table('categories')->insert(['libelle' => 'OGM']);
+        DB::table('categories')->insert(['libelle' => 'plat']);
+        DB::table('categories')->insert(['libelle' => 'apéro']);
+        DB::table('categories')->insert(['libelle' => 'Produit à origine non-humaine']);
+        DB::table('categories')->insert(['libelle' => 'Vegan friendly']);
+        DB::table('categories')->insert(['libelle' => 'Gluten free']);
+        DB::table('categories')->insert(['libelle' => 'Pas d\'alcool']);
     }
 
     /**
