@@ -25,7 +25,6 @@ Route::middleware(['auth', 'verified']) -> group(function () {
 
     // --- Gestion des Ingrédients ---
     Route::post('ingredients', 'IngredientController@store')->name('ingredients.store');
-    Route::post('categories', 'CategorieController@store')->name('categories.store');
     Route::get('ingredients/recette/{id}', 'IngredientController@getByRecette')->name('assets.by.recette');
 
     // --- Gestion des assets ---
@@ -40,7 +39,6 @@ Route::middleware(['auth', 'verified']) -> group(function () {
     // --- Gestion du profile ---
     Route::get('profile', 'UserController@index')->name('profile.edit');
     Route::delete('/social/{id}', 'SocialController@unFollow')->name('social.unFollow');
-
 
     // --- Gestion des notes et des commentaires ---
     Route::post('/note', 'FeedbackController@storeNote');
@@ -76,12 +74,15 @@ Route::get('recettes/{nom}',  'Recette\RecetteController@list')->name('recette.l
 
 // --- Récupérations des ingrédients et des categories existantes ---
 Route::get('/ingredients', 'IngredientController@get');
-Route::get('/categories', 'CategorieController@get');
 
 // --- Authentification ---
 Auth::routes(['verify' => true]);
 Route::post('/login', 'LoginController@loger');
-Auth::routes(['verify' => true]);
+
+
+
+
+
 
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');

@@ -81,5 +81,4 @@
     </section>
 
     <script src="{{ asset ('js/pages/profile.js') }}"></script>
-
 @endsection

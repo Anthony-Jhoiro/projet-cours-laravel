@@ -20,6 +20,7 @@ mix .js('resources/js/app.js', 'public/js')
 
 
 mix.copy('resources/js/pages/recetteEdit.js', 'public/js/pages/recetteEdit.js');
+mix.copy('resources/js/pages/home.js', 'public/js/pages/home.js');
 mix.copy('resources/js/pages/profile.js', 'public/js/pages/profile.js');
 mix.copy('resources/js/pages/home.js', 'public/js/pages/home.js');
 mix.copy('resources/js/pages/nav-bar.js', 'public/js/pages/nav-bar.js');
