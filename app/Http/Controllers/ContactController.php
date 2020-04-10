@@ -13,7 +13,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contact');
+        return view('pages.contact');
     }
 
     /**
@@ -23,6 +23,6 @@ class ContactController extends Controller
      */
     public function store(ContactRequest $request) {
         Mail::to ('moi@moi.moi')->send (new Contact($request->except ('_token')));
-        return redirect()->route('home');
+        return redirect()->route('pages.home');
     }
 }

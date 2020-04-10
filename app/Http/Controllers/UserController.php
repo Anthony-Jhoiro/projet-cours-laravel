@@ -45,7 +45,7 @@ class UserController extends Controller
         //Récupérer la liste des auteurs suivis
         $parameters['auteursSuivis'] = $parameters['user'] -> getInfluencers ;
 
-        return view ('profile', $parameters);
+        return view ('pages.profile', $parameters);
     }
 
 }

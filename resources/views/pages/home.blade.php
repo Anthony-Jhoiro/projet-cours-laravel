@@ -1,4 +1,4 @@
-@extends ('page')
+@extends ('layouts.page')
 
 @section('aside')
     <aside class="p-3 float-left">

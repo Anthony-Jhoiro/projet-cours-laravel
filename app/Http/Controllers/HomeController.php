@@ -81,7 +81,7 @@ class HomeController extends Controller
 
         event (new NouvelleVisite($request->ip ()));
 
-        return view ( 'home', [
+        return view ( 'pages.home', [
             'recettes' => $recettes,
             'recettesSuggerees' => $recettesSuggerees,
             'recettesAbonnements' => $recettesAbonnements,
