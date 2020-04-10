@@ -11,9 +11,9 @@ $(() => {
     let imageContainerSize = 0;
 
 
-    let formulaire = $('#formulairePrincipal');
-    let id = $('#recetteId').val();
-    let method = formulaire.attr('method');
+    const formulaire = $('#formulairePrincipal');
+    const id = $('#recetteId').val();
+    const method = formulaire.attr('method');
 
     if (method != 'POST') {
         $.ajax({
@@ -71,7 +71,7 @@ $(() => {
             $('#selectIngredient').append('<li class="dropdown-item ingredient-item" value="' + item.id + '">' + item.libelle + '</li>')
         });
         addEventOnDropDownItems();
-    }); 
+    });
 
 
     $.ajax({
@@ -79,7 +79,7 @@ $(() => {
         url: '/categories'
     }).done(data => {
         console.log(data);
-        
+
         ingredientsListe = data;
         ingredientsListe.forEach(item => {
             $('#selectCat').append('<li class="dropdown-item categorie-item" value="' + item.id + '">' + item.libelle + '</li>')

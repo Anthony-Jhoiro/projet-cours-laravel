@@ -74,7 +74,7 @@ class RecetteController extends Controller
         }
 
         // On retourne de la vue
-        return view('pagesrecette', compact ('recette'));
+        return view('pages.recette', compact ('recette'));
     }
 
     public function indexByCategorie(Request $request, $categorie_id){

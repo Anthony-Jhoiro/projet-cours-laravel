@@ -6,7 +6,8 @@
     "/js/ressources/simplemde.min.js": "/js/ressources/simplemde.min.js",
     "/css/ressources/simplemde.min.css": "/css/ressources/simplemde.min.css",
     "/js/pages/recetteEdit.js": "/js/pages/recetteEdit.js",
-    "/js/pages/profile.js": "/js/pages/profile.js",
     "/js/pages/home.js": "/js/pages/home.js",
-    "/js/pages/nav-bar.js": "/js/pages/nav-bar.js"
+    "/js/pages/profile.js": "/js/pages/profile.js",
+    "/js/pages/nav-bar.js": "/js/pages/nav-bar.js",
+    "/js/pages/recette.js": "/js/pages/recette.js"
 }
