@@ -4,13 +4,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-@section('js_head')
-
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-@endsection
-
 @section('aside')
 
     <aside class="position-fixed mt-4 ml-2">
@@ -55,10 +48,21 @@
 
             @endif
             <div class="col-md-6">
+
+                <!-- Entête de la recette -->
                 <div>
-                    <h3>Par {{ $recette->auteurNom }} @auth <button class="btn btn-info" id="follow_btn" auteur="{{$recette->auteur}}">Suivre !</button> @endauth</h3>
+                    <h3>Par {{ $recette->auteurNom }}
+                        @auth
+                            <button class="btn btn-info" id="follow_btn" @if($estAbonne) disabled
+                                    @endif auteur="{{$recette->auteur}}">
+                                @if($estAbonne) Suivit @else Suivre ! @endif
+                            </button>
+                        @endauth
+                    </h3>
                     <h6> Mis à jour le {{ $recette->formatDate }}</h6>
                 </div>
+
+                <!-- TODO : Passer en input:radio-->
                 @if(Auth::check())
                     <div class="row mt-3">
                         <h4 class="col-md-7">Votre note :</h4>
@@ -79,6 +83,7 @@
                 </div>
                 <div>
                     <h4>Ingredients : </h4>
+                    <!-- liste des ingrédients -->
                     <ul class="list-group list-group-flush">
                         @foreach($recette->ingredients as $ingredient)
                             <li class="list-group-item bg-light">{{ $ingredient->libelle }}</li>
@@ -89,14 +94,16 @@
             </div>
         </section>
 
-
+        <!-- Contenue de la recette, les !! permettent d'afficher du HTML  -->
         <section class="col recetteContent m-5">{!! $recette->text !!}</section>
 
+        <!-- Section commentaire -->
         <section class="col border-top border-primary mx-auto">
             @if(Auth::check())
                 <div class="row col-md-12">
                     <h4>Laissez nous un commentaire :</h4>
-                    <textarea name="commentaire" id="comm" class="border border-primary rounded" cols="147" rows="10" style="resize: none;"></textarea>
+                    <textarea name="commentaire" id="comm" class="border border-primary rounded" cols="147" rows="10"
+                              style="resize: none;"></textarea>
                     <button class="btn btn-primary mt-1 float-right row" id="envoyer-com">envoyer</button>
                 </div>
             @endif

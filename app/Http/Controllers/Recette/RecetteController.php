@@ -12,6 +12,7 @@ use App\Http\Requests\PreferencesCategoriesRequest;
 use App\Http\Requests\RecetteRequest;
 use App\Ingredients;
 use App\Recette;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -73,11 +74,28 @@ class RecetteController extends Controller
             }
         }
 
+        if (Auth::check ()) {
+            $estAbbonnee = $recette->author->getFollowers->find(Auth::user ()) != null;
+        }
+
+        $parameters = [
+            'recette' => $recette,
+            'estAbonne' => $estAbbonnee
+        ];
+
         // On retourne de la vue
-        return view('pages.recette', compact ('recette'));
+        return view('pages.recette', $parameters);
     }
 
+    /**
+     * Recherche des recettes
+     * TODO : completer la description et étendre pour éviter les doublons
+     * @param Request $request
+     * @param $categorie_id
+     * @return mixed
+     */
     public function indexByCategorie(Request $request, $categorie_id){
+        // TODO : Eloquent c'est bien tu sais, mais bien utiliser Eloquent c'est mieux, regardes la doc officielle
         $recettes = Recette::select('titre', 'text', 'recettes.id', 'recettes.updated_at', 'name')
                             ->join('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')
                             ->join('users', 'recettes.auteur', '=', 'users.id')
