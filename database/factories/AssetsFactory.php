@@ -2,11 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
+use App\Assets;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Assets::class, function (Faker $faker) {
-    \Illuminate\Support\Facades\Log::debug ($faker->imageUrl ());
+$factory->define( Assets::class, function ( Faker $faker) {
     return [
         'url' => $faker->imageUrl ()
     ];

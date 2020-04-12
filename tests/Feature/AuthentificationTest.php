@@ -41,40 +41,4 @@ class AuthentificationTest extends TestCase
         $response->assertRedirect ('/home');
     }
 
-// TODO : rework
-
-//    public function testUserCanLoginWithCorrectCredentials() {
-//        $user = factory (User::class)->create([
-//            'password' => bcrypt ($password = 'i-love-everything-but-laravel')
-//        ]);
-//
-//        $response = $this->post ('/login', [
-//            'email' => $user->email,
-//            'password' => $password
-//        ]);
-//
-//        $response->assertRedirect ('/home');
-//        $response->assertAuthenticateAs($user);
-//    }
-
-// TODO : rework too
-
-//    public function testUserCanNotLoginWithIncorrectPassword()
-//    {
-//        $user = factory (User::class) -> create ([
-//            'password' => bcrypt('i-love-everything-but-laravel')
-//        ]);
-//
-//        $response = $this->from('/login')->post('/login', [
-//            'email' => $user->email,
-//            'password' => 'invalid-password',
-//        ]);
-//
-//        $response->assertRedirect('/login');
-//        $response->assertSessionHasErrors('email');
-//        $this->assertTrue(session()->hasOldInput('email'));
-//        $this->assertFalse(session()->hasOldInput('password'));
-//        $this->assertGuest();
-//    }
-
 }
