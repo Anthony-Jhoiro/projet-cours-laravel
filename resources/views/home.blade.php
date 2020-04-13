@@ -80,5 +80,5 @@
         @endforeach
     </section>
 
-    <script src="{{ asset ('js/pages/profile.js') }}"></script>
+    <script src="{{ asset ('js/pages/home.js') }}"></script>
 @endsection

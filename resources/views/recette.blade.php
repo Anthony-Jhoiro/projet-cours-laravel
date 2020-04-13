@@ -62,11 +62,11 @@
                 @if(Auth::check())
                     <div class="row mt-3">
                         <h4 class="col-md-7">Votre note :</h4>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="1"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="2"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="3"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="4"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="5"></i>
+                        <input type="radio" name="note" class="fas fa-mug-hot text-secondary mr-1 mn" id="1"></input>
+                        <input type="radio" name="note" class="fas fa-mug-hot text-secondary mr-1 mn" id="2"></input>
+                        <input type="radio" name="note" class="fas fa-mug-hot text-secondary mr-1 mn" id="3"></input>
+                        <input type="radio" name="note" class="fas fa-mug-hot text-secondary mr-1 mn" id="4"></input>
+                        <input type="radio" name="note" class="fas fa-mug-hot text-secondary mr-1 mn" id="5"></input>
                     </div>
                 @endif
                 <div class="row mb-2">
@@ -140,30 +140,7 @@
             recette_id = window.location.href.split('/').pop();
 
             // post notation :
-            $(document).ready(() => {
-                $('.mn').click(e => {
-                    note = e.currentTarget.id;
-                    console.log(note);
-
-                    $.ajax({
-                        method: 'POST',
-                        url: '/note',
-                        data: {note: note, recette_id: recette_id}
-                    }).done(data => {
-                        for(let i = 0; i < 5; i++){
-                            currentTasse = $('.mn')[i];
-                            if(i < data){
-                                currentTasse.classList.add('text-primary');
-                                currentTasse.classList.remove('text-secondary');
-                            }
-                            else {
-                                currentTasse.classList.add('text-secondary');
-                                currentTasse.classList.remove('text-primary');
-                            }
-                        }
-                    })
-                });
-            });
+            postNote();
 
 
             // note moyenne :
@@ -185,26 +162,29 @@
                 }
             });
 
-            // //  note user :
+            //  note user :
 
-            // $.ajax({
-            //     method: 'GET',
-            //     url: '/myNote/' + recette_id,
-            // })
-            // .done(data => {
+            $.ajax({
+                method: 'GET',
+                url: '/myNote/' + recette_id,
+            })
+            .done(data => {
 
-            //     for(let i = 0; i < 5; i++){
-            //         currentTasse = $('.mn')[i];
-            //         if(i < data){
-            //             currentTasse.classList.add('text-primary');
-            //             currentTasse.classList.remove('text-secondary');
-            //         } else{
-            //             currentTasse.classList.add('text-secondary');
-            //             currentTasse.classList.remove('text-primary');
-            //         }
+                for(let i = 0; i < 5; i++){
+                    currentTasse = $('.mn')[i];
+                    if(i < data){
+                        currentTasse.classList.add('text-primary');
+                        currentTasse.classList.remove('text-secondary');
+                    } else{
+                        currentTasse.classList.add('text-secondary');
+                        currentTasse.classList.remove('text-primary');
+                    }
 
-            //     }
-            // });
+                }
+                $(document).ready(() => {
+                    postNote(); // on appelle la fct pour pouvoir poster une note après avoir reçu la notre (la modifier)
+                });
+            });
 
             // envoyer commentaire :
 
@@ -263,6 +243,35 @@
                 })
 
             })
+
+            // fonction pour poster une note :
+            function postNote() {
+                    $('.mn').click(e => {
+                        note = e.currentTarget.id;
+                        console.log(note);
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '/note',
+                            data: {note: note, recette_id: recette_id}
+                        }).done(data => {
+                            for(let i = 0; i < 5; i++){
+                                currentTasse = $('.mn')[i];
+                                if(i < data){
+                                    currentTasse.classList.add('text-primary');
+                                    currentTasse.classList.remove('text-secondary');
+                                }
+                                else {
+                                    currentTasse.classList.add('text-secondary');
+                                    currentTasse.classList.remove('text-primary');
+                                }
+                            }
+                            $(document).ready(() => {
+                                postNote(); // cette fonction est récursive pour pouvoir modifier sa note (c'est à dire pouvoir poster une note après avoir posté une note)
+                            });
+                        });
+                    });
+            }
 
 
         });
