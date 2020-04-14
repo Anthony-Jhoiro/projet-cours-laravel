@@ -79,11 +79,6 @@ Route::get('/ingredients', 'IngredientController@get');
 Route::post('/login', 'LoginController@loger');
 Auth::routes(['verify' => true]);
 
-
-
-
-
-
 Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 

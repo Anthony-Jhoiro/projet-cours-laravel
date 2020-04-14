@@ -8,5 +8,6 @@
     "/js/pages/recetteEdit.js": "/js/pages/recetteEdit.js",
     "/js/pages/home.js": "/js/pages/home.js",
     "/js/pages/profile.js": "/js/pages/profile.js",
-    "/js/pages/nav-bar.js": "/js/pages/nav-bar.js"
+    "/js/pages/nav-bar.js": "/js/pages/nav-bar.js",
+    "/js/pages/recette.js": "/js/pages/recette.js"
 }

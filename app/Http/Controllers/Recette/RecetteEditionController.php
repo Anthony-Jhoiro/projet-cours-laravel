@@ -27,7 +27,7 @@ class RecetteEditionController extends Controller
             'assets' => []
         ];
 
-        return view ('recetteEdit', $parametres);
+        return view ('pages.recetteEdit', $parametres);
     }
 
     /**
@@ -59,7 +59,7 @@ class RecetteEditionController extends Controller
             'id' => $n
         ];
 
-        return view ('recetteEdit', $parametres);
+        return view ('pages.recetteEdit', $parametres);
     }
 
 }

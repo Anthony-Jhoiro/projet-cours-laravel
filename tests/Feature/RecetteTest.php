@@ -16,6 +16,7 @@ use Tests\TestCase;
 class RecetteTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -23,59 +24,63 @@ class RecetteTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue (1 + 1 == 2);
+        // Vérifier que la page de test est bien fonctionnelle
+        $this -> assertTrue ( 1 + 1 == 2 );
     }
 
-//    public function testUserCanCreateRecette() {
-//        $recette = factory (Recette::class)->make ();
-//    }
+    public function testUserCanCreateRecette()
+    {
 
-    // TODO : implement
-   public function testUserCanCreateRecette() {
+        // Création de l'utitilisateur et de la recette
+        $user = factory ( User::class ) -> create ();
+        $recette = factory ( Recette::class ) -> make ();
 
+        // création des ingrédients test
+        $nbIngredients = 5;
+        $Ingredients = [];
+        for ($i = 0; $i < $nbIngredients; $i++) {
+            $ingredient = factory ( Ingredients::class ) -> create ();
+            $id = $ingredient -> id;
+            array_push ( $Ingredients, $id );
+        }
+        $recette -> ingredients = $Ingredients;
 
-       $user = factory(User::class)->create();
-       $req = factory (Recette::class)->make ();
+        // création des catégories test
+        $nbCats = 2;
+        $categories = [];
+        for ($i = 0; $i < $nbCats; $i++) {
+            $categorie = factory ( Categorie::class ) -> create ();
+            $id = $categorie -> id;
+            array_push ( $categories, $id );
+        }
+        $recette -> categories = $categories;
 
-       // création des ingrédients test
-       $nbIngredients = 5;
-       $newIngredients = [];
-       for ($i = 0; $i < $nbIngredients; $i++) {
-           $ingredient = factory(Ingredients::class)->create();
-           $id = $ingredient->id;
-           array_push($newIngredients, $id);
-       }
-       $req->ingredients = $newIngredients;
+        $response = $this -> actingAs ( $user ) -> post ( '/recette', $recette -> getAttributes () );
+        $response -> assertSuccessful ();
 
-       // création des catégories test
-       $nbCats = 2;
-       $newCategories = [];
-       $categoriesLibelle = $req->categories;
-       for ($i = 0; $i < $nbCats; $i++) {
-           $categorie = factory(Categorie::class)->create();
-           $id = $categorie->id;
-           array_push($newCategories, $id);
-       }
-       $req->categories = $newCategories;
+        // Vérification de l'insertion de la recette
+        $this -> assertDatabaseHas ( 'recettes', [ 'titre' => $recette -> titre, 'text' => $recette -> text ] );
 
-       $response = $this -> actingAs ($user) -> post ('/recette', $req->getAttributes ());
-       $response -> assertSuccessful ();
+        // Récupération de l'id de la recette inséré
+        $recetteId = Recette::first() -> id;
 
-       $this ->assertDatabaseHas ('recettes', ['titre' => $req->titre, 'text' => $req->text]);
-   }
+        // Vérification de la création des assets
+        $this -> assertDatabaseHas ('assets', ['url' => $recette->photoUrls[0], 'recette_id' => $recetteId]);
 
-    public function testUserCanNotCreateRecetteIfNotLogin() {
-        $req = factory (Recette::class)->make ();
-        $response = $this -> post ('/recette', $req->getAttributes ());
+        // Vérification de l'assignation des categories
+        $this -> assertDatabaseHas ('recette_categorie', ['id_categorie' => $categories[0], 'id_recette' => $recetteId]);
+
+        // Vérification de l'assignation des ingrédients
+        $this -> assertDatabaseHas ('recette_ingredient', ['id_ingredient' => $Ingredients[0], 'id_recette' => $recetteId]);
+    }
+
+    public function testUserCanNotCreateRecetteIfNotLogin()
+    {
+        $req = factory ( Recette::class ) -> make ();
+        $response = $this -> post ( '/recette', $req -> getAttributes () );
 
         $response -> assertRedirect ();
     }
-
-    public function testUserCanUploadImages() {
-        // TODO : implement
-        $this ->assertTrue (true);
-    }
-
 
 
 }

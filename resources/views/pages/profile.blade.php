@@ -1,4 +1,4 @@
-@extends ('page')
+@extends ('layouts.page')
 
 @section('js_head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
