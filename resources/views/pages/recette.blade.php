@@ -66,11 +66,11 @@
                 @if(Auth::check())
                     <div class="row mt-3">
                         <h4 class="col-md-7">Votre note :</h4>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="1"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="2"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="3"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="4"></i>
-                        <i class="fas fa-mug-hot text-secondary mr-1 mn" id="5"></i>
+                        <input type="radio" class="fas fa-mug-hot text-secondary mr-1 mn" id="1"></input>
+                        <input type="radio" class="fas fa-mug-hot text-secondary mr-1 mn" id="2"></input>
+                        <input type="radio" class="fas fa-mug-hot text-secondary mr-1 mn" id="3"></input>
+                        <input type="radio" class="fas fa-mug-hot text-secondary mr-1 mn" id="4"></input>
+                        <input type="radio" class="fas fa-mug-hot text-secondary mr-1 mn" id="5"></input>
                     </div>
                 @endif
                 <div class="row mb-2">
@@ -81,6 +81,7 @@
                     <i class="fas fa-mug-hot text-secondary mr-1 moy" value="4"></i>
                     <i class="fas fa-mug-hot text-secondary mr-1 moy" value="5"></i>
                 </div>
+                <input type="text" id="recette_id" value="{{ $recette->id }}" disabled style="display:none" >
                 <div>
                     <h4>Ingredients : </h4>
                     <!-- liste des ingrédients -->

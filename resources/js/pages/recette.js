@@ -34,32 +34,12 @@ $(() => {
 
 
     // TODO : commenter et arranger
-    const recette_id = window.location.href.split('/').pop(); // TODO : pas ça (input disable)
+    const recette_id = $('#recette_id'); // TODO : pas ça (input disable)
+    console.log(recette_id);
+    
 
     // post notation :
-    $(document).ready(() => {
-        $('.mn').click(e => {
-            note = e.currentTarget.id;
-            console.log(note);
-
-            $.ajax({
-                method: 'POST',
-                url: '/note',
-                data: {note: note, recette_id: recette_id}
-            }).done(data => {
-                for (let i = 0; i < 5; i++) {
-                    currentTasse = $('.mn')[i];
-                    if (i < data) {
-                        currentTasse.classList.add('text-primary');
-                        currentTasse.classList.remove('text-secondary');
-                    } else {
-                        currentTasse.classList.add('text-secondary');
-                        currentTasse.classList.remove('text-primary');
-                    }
-                }
-            })
-        });
-    });
+    postNote();
 
 
     // note moyenne :
@@ -81,6 +61,30 @@ $(() => {
             }
         });
 
+    //  note user :
+
+    $.ajax({
+        method: 'GET',
+        url: '/myNote/' + recette_id,
+    })
+        .done(data => {
+
+            for (let i = 0; i < 5; i++) {
+                currentTasse = $('.mn')[i];
+                if (i < data) {
+                    currentTasse.classList.add('text-primary');
+                    currentTasse.classList.remove('text-secondary');
+                } else {
+                    currentTasse.classList.add('text-secondary');
+                    currentTasse.classList.remove('text-primary');
+                }
+
+            }
+            $(document).ready(() => {
+                postNote(); // on appelle la fct pour pouvoir poster une note après avoir reçu la notre (la modifier)
+            });
+        });
+
     // envoyer commentaire :
 
     $('#envoyer-com').click(e => {
@@ -89,10 +93,9 @@ $(() => {
         $.ajax({
             method: 'POST',
             url: '/commentaire',
-            data: {comm: text, recette_id: recette_id}
+            data: { comm: text, recette_id: recette_id }
         })
             .done(data => {
-                // TODO : Le maximu dans le Controller stp
                 let user = data.user;
 
                 let now = new Date();
@@ -140,5 +143,32 @@ $(() => {
 
         })
 
+    // fonction pour poster une note :
+    function postNote() {
+        $('.mn').click(e => {
+            note = e.currentTarget.id;
+            console.log(note);
 
+            $.ajax({
+                method: 'POST',
+                url: '/note',
+                data: { note: note, recette_id: recette_id }
+            }).done(data => {
+                for (let i = 0; i < 5; i++) {
+                    currentTasse = $('.mn')[i];
+                    if (i < data) {
+                        currentTasse.classList.add('text-primary');
+                        currentTasse.classList.remove('text-secondary');
+                    }
+                    else {
+                        currentTasse.classList.add('text-secondary');
+                        currentTasse.classList.remove('text-primary');
+                    }
+                }
+                $(document).ready(() => {
+                    postNote(); // cette fonction est récursive pour pouvoir modifier sa note (c'est à dire pouvoir poster une note après avoir posté une note)
+                });
+            });
+        });
+    }
 });
