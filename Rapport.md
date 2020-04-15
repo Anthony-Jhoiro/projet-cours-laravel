@@ -21,26 +21,26 @@ en utilisant le framework Laravel.
 |modifier le mot de passe | ok |
 |suivre un auteur | ok |
 |rechercher une recette en fonction de ses catégories | ok|
-|rechercher une recette en fonction de son titre | ok| 
+|rechercher une recette en fonction de son titre | ok|
 |formulaire de contact | ok |
 |compteur de visite | ok |
 
 
-## MCD : 
+## MCD :
 ![mcd not found](mcd.png)
 
-## MLD : 
+## MLD :
 ![mcd not found](mld.png)
 
 ## Problèmes rencontrés :
-- Il nous a été impossible d'utiliser Dusk car il détruisait à chaque fois sa base de donnée et 
+- Il nous a été impossible d'utiliser Dusk car il détruisait à chaque fois sa base de donnée et
 n'effectuait pas de migration dans un environnement vide.
 - Nous avons essayé de déployer l'application mais la configuration nginx du site de laravel n'a pas fonctionné,
-- Difficultés à appréhender un framework full stack alors que nous avons l'habitude d'utiliser un framework pour 
-le Back-End et un autre pour le Front-End. 
+- Difficultés à appréhender un framework full stack alors que nous avons l'habitude d'utiliser un framework pour
+le Back-End et un autre pour le Front-End.
+- On a essayer d'implémenter un test sur les notations sans succès
 
 ## Pistes pour continuer le projet :
 - Gestion de roles pour qu'un administrateur puisse pouvoir controller toutes les recettes
 - Paginations avec les listes de recettes pour éviter la surcharge d'informations
 - pouvoir supprimer des assets d'une recette et du stockage
-
