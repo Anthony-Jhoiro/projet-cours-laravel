@@ -74,14 +74,18 @@ class RecetteController extends Controller
             }
         }
 
+        $estAbbonnee = null;
+
         if (Auth::check ()) {
             $estAbbonnee = $recette->author->getFollowers->find(Auth::user ()) != null;
-        }
 
+            
+        }
         $parameters = [
-            'recette' => $recette,
-            'estAbonne' => $estAbbonnee
-        ];
+                'recette' => $recette,
+                'estAbonne' => $estAbbonnee
+            ];
+
 
         // On retourne de la vue
         return view('pages.recette', $parameters);
@@ -89,29 +93,25 @@ class RecetteController extends Controller
 
     /**
      * Recherche des recettes
-     * TODO : completer la description et étendre pour éviter les doublons
      * @param Request $request
      * @param $categorie_id
      * @return mixed
      */
     public function indexByCategorie(Request $request, $categorie_id){
-        // TODO : Eloquent c'est bien tu sais, mais bien utiliser Eloquent c'est mieux, regardes la doc officielle
-        $recettes = Recette::select('titre', 'text', 'recettes.id', 'recettes.updated_at', 'name')
-                            ->join('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')
-                            ->join('users', 'recettes.auteur', '=', 'users.id')
-                            ->where('id_categorie', $categorie_id)
+        $recettes = Recette::has('getCategories', $categorie_id)
                             ->get();
 
         foreach ($recettes as $recette) {
             $recette->formatDate = $this->dateController->getFormatDate ($recette->updated_at);
             $recette -> text = substr ( $recette -> text, 0, 100 ) . "...";
+            $recette->auteurNom = $recette->author->name;
         }
+
         return $recettes;
     }
 
     public function indexAll(Request $request){
         $recettes = Recette::select('titre', 'text', 'recettes.id', 'recettes.updated_at', 'name')
-                            ->leftJoin('recette_categorie', 'recettes.id', '=', 'recette_categorie.id_recette')
                             ->join('users', 'recettes.auteur', '=', 'users.id')
                             ->get();
 
@@ -174,7 +174,6 @@ class RecetteController extends Controller
         if ($recette->auteur != Auth::user ()->id) throw new \Exception("Vous n'êtes pas autorisé");
 
         // changements dans la table recette
-        // TODO : Titre unique
         $recette->titre = $request->titre;
         $recette->text = $request->text;
         $recette->save();
@@ -218,8 +217,6 @@ class RecetteController extends Controller
 
         if ($recette->auteur == Auth::user ()->id) {
             $recette->forceDelete();
-        } else {
-            // TODO : Renvoyer une erreur
         }
 
     }

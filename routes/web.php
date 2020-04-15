@@ -65,7 +65,7 @@ Route::post('contact', 'ContactController@store');
 
 // --- Récupération des informations pour une recette ---
 Route::get('recette/{id}', 'Recette\RecetteController@index');
-Route::get('recette/categorie/{id}', 'Recette\RecetteController@indexByCategorie');
+Route::get('recettes/categorie/{id}', 'Recette\RecetteController@indexByCategorie');
 Route::get('recettes/', 'Recette\RecetteController@indexAll');
 
 Route::get('/noteMoyenne/{id}', 'FeedbackController@indexNoteMoyenne');
@@ -83,5 +83,4 @@ Route::get('/redirect', 'SocialAuthGoogleController@redirect');
 Route::get('/callback', 'SocialAuthGoogleController@callback');
 
 Route::get('/ingredients', 'IngredientController@get');
-Route::get('/categories', 'CategorieController@get');
 

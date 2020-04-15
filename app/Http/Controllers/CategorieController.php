@@ -30,8 +30,4 @@ class CategorieController extends Controller
         return self::get ();
 
     }
-
-    public function get() {
-        return Categorie::all();
-    }
 }

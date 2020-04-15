@@ -170,11 +170,9 @@ $(() => {
             },
         })
             .done((data) => {
-                console.log(data);
                 window.location.href = '/home';
             })
             .fail((data) => {
-                console.log(data.responseText.message);
                 $('#errorText').html(JSON.parse(data.responseText).message);
             });
     });

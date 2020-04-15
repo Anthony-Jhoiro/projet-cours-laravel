@@ -52,10 +52,10 @@
 
 
         </ul>
-        <div class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" action="{{ route('home') }}">
             <input id="recherche" class="form-control mr-sm-2" type="text" placeholder="Search" class="form-control @error('nom') is-invalid @enderror" name="filtre" placeholder="rechercher" value="{{ old('nom') }}">
             <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search-bar">Rechercher une recette</button>
-        </div>
+        </form>
     </div>
 </nav>
 

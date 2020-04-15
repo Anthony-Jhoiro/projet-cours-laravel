@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NouvelleVisite;
 use App\Recette;
+use App\Categorie;
 use App\User;
 use App\visitors;
 use Illuminate\Http\Request;
@@ -39,8 +40,8 @@ class HomeController extends Controller
         else $offset = 0;
         $size = 10;
         // Récupération de la liste des recettes
-        if (isset( $_GET['s'] ) && !empty( $_GET['s'] )) {
-            $recettes = Recette::where('titre', 'like', '%'.$_GET['s'].'%')->get();
+        if (isset( $_GET['filtre'] ) && !empty( $_GET['filtre'] )) {
+            $recettes = Recette::where('titre', 'like', '%'.$_GET['filtre'].'%')->get();
         } else {
             $recettes = Recette::all();
 
@@ -58,6 +59,9 @@ class HomeController extends Controller
                 }
             }
         }
+
+        // on charge toutes les catégories pour le filtre par catégorie
+        $cats = Categorie::all();
 
 
         // Pour chaque recette on formatte la date et on controlle la taille du texte
@@ -85,7 +89,8 @@ class HomeController extends Controller
             'recettes' => $recettes,
             'recettesSuggerees' => $recettesSuggerees,
             'recettesAbonnements' => $recettesAbonnements,
-            'totalVisitors' => Visitors::sum('nbVisit')
+            'totalVisitors' => Visitors::sum('nbVisit'),
+            'categories' => $cats
         ]);
     }
 }

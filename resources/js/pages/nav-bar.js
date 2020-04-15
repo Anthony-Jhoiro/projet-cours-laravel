@@ -23,15 +23,6 @@ $(() => {
         e.preventDefault();
         document.getElementById('logout-form').submit();
     });
-
-    // Clique sur "Rechercher une recette" lance la recherche des recettes par nom
-    // TODO : A placer dans le controller
-    $('#search-bar').click(() => {
-        let search = $('#recherche')[0].value;
-        if(search != ""){
-            window.location.href = "/home?s=" + search + "&l=1";
-        }
-    });
 });
 
 

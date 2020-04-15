@@ -2,6 +2,11 @@
 
 namespace App;
 
+
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
+
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +20,7 @@ class Recette extends Model
         'auteur',
         'maj',
         'ingredients',
+        'categories',
         'assets',
         'formatDate',
         'auteurNom'
@@ -47,5 +53,4 @@ class Recette extends Model
     public function author() {
         return $this->belongsTo ('App\User', 'auteur', 'id');
     }
-
 }

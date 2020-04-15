@@ -62,14 +62,19 @@ class FeedbackController extends Controller
 
     public function indexMyNote(Request $request, $recette_id){ // récupérer la note qu'un utilisateur a donné à la recette
 
-        // on recherche dans la base de donnée la note
-        $id = Auth::user()->id;
-        $myNote = Feedback::where('recette_id', $recette_id)->where('user_id', $id)->get();
-        if(count($myNote) != 0){ // s'il y en a une, on la récupère
-            $myNote = $myNote[0]['note'];
-        }
+        if(Auth::check()){ // si l'utilisateur est connecté, on va chercher sa note
+            // on recherche dans la base de donnée la note
+            $id = Auth::user()->id;
+            $myNote = Feedback::where('recette_id', $recette_id)->where('user_id', $id)->get();
+            if(count($myNote) != 0){ // s'il y en a une, on la récupère
+                $myNote = $myNote[0]['note'];
+            }
 
-        if($myNote == null) $myNote = 0; // sinon la note affichée est 0
+            if($myNote == null) $myNote = 0; // sinon la note affichée est 0
+        }
+        else { // sinon on met sa note à null uniquement pour le front (ça n'affectera pas la bdd)
+            $myNote = NULL;
+        }
 
         return $myNote;
     }
@@ -106,7 +111,8 @@ class FeedbackController extends Controller
 
         $return = [
             'user' => Auth::user()->name,
-            'commentaire' => $comm
+            'commentaire' => $comm,
+            'date' => $this->dateController->getFormatDate ( Date('Y-m-d H:i:s') )
         ];
 
         return $return;

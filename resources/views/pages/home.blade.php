@@ -11,8 +11,10 @@
     <h4> Trier par catégorie : </h4>
     <div class="row">
         <select name="categorieTri" id="selectCat" class="col-md-3 border border-info rounded">
-            <!-- feet by js -->
             <option value="-1">Tout</option>
+            @foreach($categories as $cat)
+                <option class="dropdown-item categorie-item" value="{{ $cat->id }}">{{ $cat->libelle }}</option>
+            @endforeach
         </select>
         <button class="btn btn-success ml-2" id="btn-tri">trier</button>
     </div>
